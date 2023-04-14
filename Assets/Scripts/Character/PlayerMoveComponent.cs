@@ -6,12 +6,18 @@ using UnityEngine.InputSystem;
 
 public class PlayerMoveComponent : MonoBehaviour
 {
-    PlayerInputsComponent inputs;
+    [SerializeField] float gravAcceleration = -5;
+    [SerializeField] float ascendingDrag = 1;
+    [SerializeField] float holdingJumpDrag = 1;
+    [SerializeField] float jumpVelocity = 1;
+    [SerializeField] float terminalVelocity = -1;
+    [SerializeField] float horizontalSpeed = 1;
+    [SerializeField] float coyoteTime = 0.2f;
 
-    private void Awake()
-    {
-        inputs = GetComponent<PlayerInputsComponent>();
-    }
+    PlayerInputsComponent inputs;
+    Vector2 velocity = Vector2.zero;
+    float coyoteTimeElapsed = 0;
+
     public bool IsTouchingGround { get; set; }
     public bool IsTouchingPlatform { get; set; }
 
@@ -29,26 +35,50 @@ public class PlayerMoveComponent : MonoBehaviour
     }
     public bool IsCoyoteTime
     {
-        get => coyoteTimeElapsed < coyoteTime;
-        
+        get => coyoteTimeElapsed < coyoteTime; 
     }
 
-
-    [SerializeField] float gravAcceleration = -5;
-    [SerializeField] float ascendingDrag = 1;
-    [SerializeField] float holdingJumpDrag = 1;
-    [SerializeField] float initialJumpVerticalVelocity = 1;
-    [SerializeField] float terminalFallingSpeed = -1;
-    [SerializeField] float horizontalSpeed = 1;
-    [SerializeField] float coyoteTime = 0.2f;
-
-    Vector2 velocity = Vector2.zero;
-    float coyoteTimeElapsed = 0;
+    private void Awake()
+    {
+        inputs = GetComponent<PlayerInputsComponent>();
+    }
 
     private void Update()
     {
-        velocity.x = inputs.HorizontalInput * horizontalSpeed;
+        SetHorizontalVelocity();
+        AddGravity();
+        AddDrag();
+        CheckInputs();
+        LimitVelocity();
+        transform.Translate(Time.deltaTime * velocity);
+        //Debug.Log($"isGrounded: {IsGrounded}   velocity:({velocity.x},{velocity.y})   jumping:{inputs.JumpInput}");
+    }
 
+    private void SetHorizontalVelocity()
+    {
+        velocity.x = inputs.HorizontalInput * horizontalSpeed;
+    }
+
+    private void CheckInputs()
+    {
+        if (inputs.JumpInput && (IsGrounded || IsCoyoteTime) && !IsJumping)
+            velocity.y = jumpVelocity;
+
+        //can be optimized by exposing InputActions and tying events to them
+        if (inputs.DropInput && IsTouchingPlatform)
+        {
+            IsTouchingPlatform = false;
+        }
+    }
+
+    private void LimitVelocity()
+    {
+        if (velocity.y < terminalVelocity)
+            velocity.y = terminalVelocity;
+    }
+
+    private void AddGravity()
+    {
         if (IsGrounded)
             velocity.y = 0;
         else
@@ -56,31 +86,16 @@ public class PlayerMoveComponent : MonoBehaviour
             velocity.y += gravAcceleration * Time.deltaTime;
             coyoteTimeElapsed += Time.deltaTime;
         }
-        
-        
+    }
+
+    private void AddDrag()
+    {
         if (IsJumping)
         {
             velocity.y += ascendingDrag * Time.deltaTime;
             if (inputs.JumpInput)
                 velocity.y += holdingJumpDrag * Time.deltaTime;
-        }       
-
-
-        if (inputs.JumpInput && (IsGrounded || IsCoyoteTime) && !IsJumping)
-            velocity.y = initialJumpVerticalVelocity;
-        
-        if (velocity.y < terminalFallingSpeed)
-            velocity.y = terminalFallingSpeed;
-
-
-        //can be optimized by exposing InputActions and tying events to them
-        if (inputs.DropInput && IsTouchingPlatform)
-        {
-            IsTouchingPlatform = false;
         }
-        transform.Translate(Time.deltaTime * velocity);
-        //Debug.Log($"isGrounded: {IsGrounded}   velocity:({velocity.x},{velocity.y})   jumping:{inputs.JumpInput}");
-        
     }
 
     public void ResetCoyoteTime()
