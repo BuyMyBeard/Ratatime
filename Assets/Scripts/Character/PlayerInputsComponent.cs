@@ -27,8 +27,8 @@ public class PlayerInputsComponent : MonoBehaviour
         jumpAction.canceled += _ => JumpInput = false;
 
         dropAction.Enable();
-        dropAction.performed -= _ => DropInput = true;
-        dropAction.canceled -= _ => DropInput = false;
+        dropAction.performed += _ => DropInput = true;
+        dropAction.canceled += _ => DropInput = false;
 
     }
     private void OnDisable()

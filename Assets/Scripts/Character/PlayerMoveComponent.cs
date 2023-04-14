@@ -12,24 +12,31 @@ public class PlayerMoveComponent : MonoBehaviour
     {
         inputs = GetComponent<PlayerInputsComponent>();
     }
+    public bool IsTouchingGround { get; set; }
+    public bool IsTouchingPlatform { get; set; }
 
-    public bool IsTouchingGround
+    public bool IsFalling
     {
-        set
+        get
         {
-            IsGrounded = value;
+            return velocity.y < 0;
         }
     }
-    public bool IsTouchingPlatform
+    public bool IsJumping
     {
-        set
+        get
         {
-            IsGrounded = value && !inputs.DropInput;
+            return velocity.y > 0;
         }
     }
-    public bool IsGrounded { get; private set; } = false;
+    public bool IsGrounded
+    {
+        get => IsTouchingGround || IsTouchingPlatform;
+    }
 
-    [SerializeField] float gravitationalAcceleration = -1;
+    [SerializeField] float gravAcceleration = -5;
+    [SerializeField] float ascendingDrag = 1;
+    [SerializeField] float holdingJumpDrag = 1;
     [SerializeField] float initialJumpVerticalVelocity = 1;
     [SerializeField] float terminalFallingSpeed = -1;
     [SerializeField] float horizontalSpeed = 1;
@@ -38,21 +45,35 @@ public class PlayerMoveComponent : MonoBehaviour
 
     private void Update()
     {
+        velocity.x = inputs.HorizontalInput * horizontalSpeed;
 
-        float horizontalVelocity = inputs.HorizontalInput * horizontalSpeed;
+        if (IsGrounded)
+            velocity.y = 0;
+        else
+            velocity.y += gravAcceleration * Time.deltaTime;
+        
+        
+        if (IsJumping)
+        {
+            velocity.y += ascendingDrag * Time.deltaTime;
+            if (inputs.JumpInput)
+                velocity.y += holdingJumpDrag * Time.deltaTime;
+        }       
 
-        float verticalVelocity = 0;
-        if (!IsGrounded)
-            verticalVelocity = velocity.y + gravitationalAcceleration * Time.deltaTime;
+
         if (inputs.JumpInput && IsGrounded)
-            verticalVelocity = initialJumpVerticalVelocity;
+            velocity.y = initialJumpVerticalVelocity;
+        if (velocity.y < terminalFallingSpeed)
+            velocity.y = terminalFallingSpeed;
 
-        if (verticalVelocity < terminalFallingSpeed)
-            verticalVelocity = terminalFallingSpeed;
 
-        velocity = new Vector2(horizontalVelocity, verticalVelocity);
+        //can be optimized by exposing InputActions and tying events to them
+        if (inputs.DropInput && IsTouchingPlatform)
+        {
+            IsTouchingPlatform = false;
+        }
         transform.Translate(Time.deltaTime * velocity);
-        //Debug.Log($"isGrounded: {IsGrounded}   velocity:({velocity.x},{velocity.y})   jumping:{jumpInput}");
+        Debug.Log($"isGrounded: {IsGrounded}   velocity:({velocity.x},{velocity.y})   jumping:{inputs.JumpInput}");
         
     }
 }

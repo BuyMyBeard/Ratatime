@@ -1,5 +1,5 @@
 {
-    "name": "Input map",
+    "name": "Input Map",
     "maps": [
         {
             "name": "PlayerActions",
@@ -27,6 +27,15 @@
                     "name": "Drop",
                     "type": "Button",
                     "id": "617c3b54-03c3-4fa4-ae8a-d3e5a9bb83e0",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Interact",
+                    "type": "Button",
+                    "id": "0d36c70d-60d9-47c0-bcf4-b305808ee6d9",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -130,6 +139,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Drop",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "89627977-e53a-4104-a157-e48e9f470843",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "524afd25-2655-470a-a900-8f8c955ba866",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

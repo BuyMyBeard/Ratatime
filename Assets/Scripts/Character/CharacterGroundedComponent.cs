@@ -15,11 +15,16 @@ public class CharacterGroundedComponent : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {        
         //transform into switch case if there are more cases to manage
-        if (collision.gameObject.layer == 6)                                            
+        if (collision.gameObject.layer == 6 && playerMove.IsFalling)
+        {
             playerMove.IsTouchingPlatform = true;
-        else if (collision.gameObject.layer == 7)
+            playerMove.transform.position = collision.ClosestPoint(playerMove.transform.position) + new Vector2(0, characterHeight / 2);
+        }                                            
+        else if (collision.gameObject.layer == 7 && playerMove.IsFalling)
+        {
             playerMove.IsTouchingGround = true;
-        playerMove.transform.position = collision.ClosestPoint(playerMove.transform.position) + new Vector2(0, characterHeight / 2);
+            playerMove.transform.position = collision.ClosestPoint(playerMove.transform.position) + new Vector2(0, characterHeight / 2);
+        }
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
@@ -29,9 +34,9 @@ public class CharacterGroundedComponent : MonoBehaviour
             playerMove.IsTouchingGround = false;
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (collision.gameObject.layer == 6)
-            playerMove.IsTouchingPlatform = true;
-    }
+    //private void OnTriggerStay2D(Collider2D collision)
+    //{
+    //    if (collision.gameObject.layer == 6)
+    //        playerMove.IsTouchingPlatform = true;
+    //}
 }
