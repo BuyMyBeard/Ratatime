@@ -17,17 +17,11 @@ public class PlayerMoveComponent : MonoBehaviour
 
     public bool IsFalling
     {
-        get
-        {
-            return velocity.y < 0;
-        }
+        get => velocity.y < 0;
     }
     public bool IsJumping
     {
-        get
-        {
-            return velocity.y > 0;
-        }
+        get => velocity.y > 0;
     }
     public bool IsGrounded
     {
@@ -35,10 +29,8 @@ public class PlayerMoveComponent : MonoBehaviour
     }
     public bool IsCoyoteTime
     {
-        get
-        {
-            return coyoteTimeElapsed < coyoteTime;
-        }
+        get => coyoteTimeElapsed < coyoteTime;
+        
     }
 
 
