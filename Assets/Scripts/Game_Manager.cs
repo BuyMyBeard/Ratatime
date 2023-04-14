@@ -82,7 +82,7 @@ public class Game_Manager : MonoBehaviour
         this.timeUntilSwitch = SwitchInterval;
 
         // TODO: Remove this code
-        cam.backgroundColor = IsFuture ? new Color(0.4f, 0.4f, 0.4f) : new Color(0.6f, 0.6f, 0.6f);
+        cam.backgroundColor = IsFuture ? new Color(0.3f, 0.3f, 0.3f) : new Color(0.4f, 0.4f, 0.4f);
     }
 }
 
