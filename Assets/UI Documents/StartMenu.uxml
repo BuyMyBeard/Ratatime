@@ -1,0 +1,7 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:VisualElement style="flex-grow: 1; justify-content: flex-end;">
+        <ui:VisualElement style="flex-grow: 0; flex-direction: row; justify-content: center; bottom: 50%;">
+            <ui:Button text="Start" display-tooltip-when-elided="true" name="StartButton" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

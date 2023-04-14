@@ -7,14 +7,18 @@ public class Game_Manager : MonoBehaviour
 {
     public int Time;
 
-    [SerializeField]
-    private int SwitchInterval;
-
-    public Text UIElement;
-
     public bool IsFuture;
 
     public GameplayStates State = GameplayStates.Playing;
+
+    public Text CountDownTimer;
+
+    [SerializeField]
+    private int SwitchInterval;
+
+    private int timeUntilSwitch;
+
+    private Camera cam;
 
     public enum GameplayStates
     {
@@ -23,12 +27,6 @@ public class Game_Manager : MonoBehaviour
         Lost,
         Won
     }
-
-    private int timeUntilSwitch;
-
-    private Camera cam;
-
-
 
     void Start()
     {
@@ -43,11 +41,14 @@ public class Game_Manager : MonoBehaviour
         while (true)
         {
             // Tick the timers
-            Time--;
-            timeUntilSwitch--;
+            if (this.State == GameplayStates.Playing)
+            {
+                Time--;
+                timeUntilSwitch--;
 
-            // Update the UI
-            UIElement.text = DisplayTime(Time);
+                // Update the UI
+                CountDownTimer.text = GetDisplayTime(Time);
+            }
 
             // Check to see if the state has changed
             if (Time <= 0)
@@ -60,7 +61,7 @@ public class Game_Manager : MonoBehaviour
         }
     }
 
-    string DisplayTime(int time)
+    string GetDisplayTime(int time)
     {
         var seconds = time;
         var minutes = 0;
@@ -81,7 +82,7 @@ public class Game_Manager : MonoBehaviour
         this.timeUntilSwitch = SwitchInterval;
 
         // TODO: Remove this code
-        cam.backgroundColor = IsFuture ? new Color(0.6f, 0f, 0f) : new Color(0.6f, 0.6f, 0.6f);
+        cam.backgroundColor = IsFuture ? new Color(0.4f, 0.4f, 0.4f) : new Color(0.6f, 0.6f, 0.6f);
     }
 }
 
