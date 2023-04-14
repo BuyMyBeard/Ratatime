@@ -9,7 +9,8 @@ public class PlayerInputsComponent : MonoBehaviour
 
     InputAction moveAction, jumpAction, dropAction;
     public float HorizontalInput { get; private set; }
-    public bool JumpInput { get; private set; }
+    public bool JumpPressInput { get; private set; }
+    public bool JumpHoldInput { get; private set; }
     public bool DropInput { get; private set; }
     private void Awake()
     {
@@ -26,6 +27,8 @@ public class PlayerInputsComponent : MonoBehaviour
 
         jumpAction.Enable();
         jumpAction.started += _ => StartCoroutine(BufferJump());
+        jumpAction.performed += _ => JumpHoldInput = true;
+        jumpAction.canceled += _ => JumpHoldInput = false;
 
         dropAction.Enable();
         dropAction.performed += _ => DropInput = true;
@@ -38,6 +41,8 @@ public class PlayerInputsComponent : MonoBehaviour
         moveAction.canceled -= _ => HorizontalInput = 0;
 
         jumpAction.started -= _ => StartCoroutine(BufferJump());
+        jumpAction.performed -= _ => JumpHoldInput = true;
+        jumpAction.canceled -= _ => JumpHoldInput = false;
 
         dropAction.performed -= _ => DropInput = true;
         dropAction.canceled -= _ => DropInput = false;
@@ -45,8 +50,8 @@ public class PlayerInputsComponent : MonoBehaviour
 
     IEnumerator BufferJump()
     {
-        JumpInput = true;
+        JumpPressInput = true;
         yield return new WaitForSeconds(jumpInputBuffer);
-        JumpInput = false;
+        JumpPressInput = false;
     }
 }

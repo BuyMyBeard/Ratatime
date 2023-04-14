@@ -61,7 +61,7 @@ public class PlayerMoveComponent : MonoBehaviour
 
     private void CheckInputs()
     {
-        if (inputs.JumpInput && (IsGrounded || IsCoyoteTime) && !IsJumping)
+        if (inputs.JumpPressInput && (IsGrounded || IsCoyoteTime) && !IsJumping)
             velocity.y = jumpVelocity;
 
         //can be optimized by exposing InputActions and tying events to them
@@ -93,7 +93,7 @@ public class PlayerMoveComponent : MonoBehaviour
         if (IsJumping)
         {
             velocity.y += ascendingDrag * Time.deltaTime;
-            if (inputs.JumpInput)
+            if (inputs.JumpHoldInput)
                 velocity.y += holdingJumpDrag * Time.deltaTime;
         }
     }
