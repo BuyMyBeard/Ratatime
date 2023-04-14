@@ -29,9 +29,15 @@ public class CharacterGroundedComponent : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.layer == 6)
+        {
             playerMove.IsTouchingPlatform = false;
+            playerMove.ResetCoyoteTime();
+        }
         else if (collision.gameObject.layer == 7)
+        {
             playerMove.IsTouchingGround = false;
+            playerMove.ResetCoyoteTime();
+        }
     }
 
     //private void OnTriggerStay2D(Collider2D collision)

@@ -33,6 +33,14 @@ public class PlayerMoveComponent : MonoBehaviour
     {
         get => IsTouchingGround || IsTouchingPlatform;
     }
+    public bool IsCoyoteTime
+    {
+        get
+        {
+            return coyoteTimeElapsed < coyoteTime;
+        }
+    }
+
 
     [SerializeField] float gravAcceleration = -5;
     [SerializeField] float ascendingDrag = 1;
@@ -40,8 +48,10 @@ public class PlayerMoveComponent : MonoBehaviour
     [SerializeField] float initialJumpVerticalVelocity = 1;
     [SerializeField] float terminalFallingSpeed = -1;
     [SerializeField] float horizontalSpeed = 1;
+    [SerializeField] float coyoteTime = 0.2f;
 
     Vector2 velocity = Vector2.zero;
+    float coyoteTimeElapsed = 0;
 
     private void Update()
     {
@@ -50,7 +60,10 @@ public class PlayerMoveComponent : MonoBehaviour
         if (IsGrounded)
             velocity.y = 0;
         else
+        {
             velocity.y += gravAcceleration * Time.deltaTime;
+            coyoteTimeElapsed += Time.deltaTime;
+        }
         
         
         if (IsJumping)
@@ -61,8 +74,9 @@ public class PlayerMoveComponent : MonoBehaviour
         }       
 
 
-        if (inputs.JumpInput && IsGrounded)
+        if (inputs.JumpInput && (IsGrounded || IsCoyoteTime))
             velocity.y = initialJumpVerticalVelocity;
+        
         if (velocity.y < terminalFallingSpeed)
             velocity.y = terminalFallingSpeed;
 
@@ -75,6 +89,11 @@ public class PlayerMoveComponent : MonoBehaviour
         transform.Translate(Time.deltaTime * velocity);
         Debug.Log($"isGrounded: {IsGrounded}   velocity:({velocity.x},{velocity.y})   jumping:{inputs.JumpInput}");
         
+    }
+
+    public void ResetCoyoteTime()
+    {
+        coyoteTimeElapsed = 0;
     }
 }
 
