@@ -66,7 +66,7 @@ public class PlayerMoveComponent : MonoBehaviour
         }       
 
 
-        if (inputs.JumpInput && (IsGrounded || IsCoyoteTime))
+        if (inputs.JumpInput && (IsGrounded || IsCoyoteTime) && !IsJumping)
             velocity.y = initialJumpVerticalVelocity;
         
         if (velocity.y < terminalFallingSpeed)
@@ -79,7 +79,7 @@ public class PlayerMoveComponent : MonoBehaviour
             IsTouchingPlatform = false;
         }
         transform.Translate(Time.deltaTime * velocity);
-        Debug.Log($"isGrounded: {IsGrounded}   velocity:({velocity.x},{velocity.y})   jumping:{inputs.JumpInput}");
+        //Debug.Log($"isGrounded: {IsGrounded}   velocity:({velocity.x},{velocity.y})   jumping:{inputs.JumpInput}");
         
     }
 
