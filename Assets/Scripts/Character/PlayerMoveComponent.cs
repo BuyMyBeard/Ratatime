@@ -19,33 +19,34 @@ public class PlayerMoveComponent : GroundedCharacter
         get => coyoteTimeElapsed < coyoteTime;
     }
 
-    private void Awake()
+    new private void Awake()
     {
+        base.Awake();
         inputs = GetComponent<PlayerInputsComponent>();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
+        newVelocity = Velocity;
         SetHorizontalVelocity();
         AddGravity();
         AddDrag();
         CheckInputs();
         LimitVelocity();
-
-        transform.Translate(velocity * Time.deltaTime);
+        Velocity = newVelocity;
 
          // Debug.Log($"isGrounded: {IsGrounded}   velocity:({velocity.x},{velocity.y})");
     }
 
     private void SetHorizontalVelocity()
     {
-        velocity.x = inputs.HorizontalInput * horizontalSpeed;
+        newVelocity.x = inputs.HorizontalInput * horizontalSpeed;
     }
 
     private void CheckInputs()
     {
         if (inputs.JumpPressInput && (IsGrounded || IsCoyoteTime) && !IsJumping)
-            velocity.y = jumpVelocity;
+            newVelocity.y = jumpVelocity;
 
         //can be optimized by exposing InputActions and tying events to them
         if (inputs.DropInput && IsTouchingPlatform)
@@ -57,10 +58,10 @@ public class PlayerMoveComponent : GroundedCharacter
     protected override void AddGravity()
     {
         if (IsGrounded)
-            velocity.y = 0;
+            newVelocity.y = 0;
         else
         {
-            velocity.y += gravAcceleration * Time.deltaTime;
+            newVelocity.y += gravAcceleration * Time.deltaTime;
             coyoteTimeElapsed += Time.deltaTime;
         }
     }
@@ -69,9 +70,9 @@ public class PlayerMoveComponent : GroundedCharacter
     {
         if (IsJumping)
         {
-            velocity.y += ascendingDrag * Time.deltaTime;
+            newVelocity.y += ascendingDrag * Time.deltaTime;
             if (inputs.JumpHoldInput)
-                velocity.y += holdingJumpDrag * Time.deltaTime;
+                newVelocity.y += holdingJumpDrag * Time.deltaTime;
         }
     }
 

@@ -1,11 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 using UnityEngine.Windows;
 
 public abstract class GroundedCharacter : MonoBehaviour
 {
-    protected Vector2 velocity;
     [SerializeField] protected float terminalVelocity;
     [SerializeField] protected float gravAcceleration;
     [SerializeField] protected float horizontalSpeed;
@@ -13,33 +13,47 @@ public abstract class GroundedCharacter : MonoBehaviour
     public bool IsTouchingGround { get; set; }
     public bool IsTouchingPlatform { get; set; }
 
+    public Rigidbody2D RB { get; private set; }
+
+    public Vector2 Velocity
+    {
+        get => RB.velocity;
+        protected set => RB.velocity = value;
+    }
+
+    protected Vector2 newVelocity;
+
     public bool IsFalling
     {
-        get => velocity.y < 0;
+        get => Velocity.y < 0;
     }
     public bool IsJumping
     {
-        get => velocity.y > 0;
+        get => Velocity.y > 0;
     }
     public bool IsGrounded
     {
         get => IsTouchingGround || IsTouchingPlatform;
     }
 
+    protected void Awake()
+    {
+        RB = GetComponent<Rigidbody2D>();
+    }
 
     protected virtual void LimitVelocity()
     {
-        if (velocity.y < terminalVelocity)
-            velocity.y = terminalVelocity;
+        if (newVelocity.y < terminalVelocity)
+            newVelocity.y = terminalVelocity;
     }
 
     protected virtual void AddGravity()
     {
         if (IsGrounded)
-            velocity.y = 0;
+            newVelocity.y = 0;
         else
         {
-            velocity.y += gravAcceleration * Time.deltaTime;
+            newVelocity.y += gravAcceleration * Time.deltaTime;
         }
     }
 }
