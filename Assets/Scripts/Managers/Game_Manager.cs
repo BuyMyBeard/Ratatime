@@ -38,12 +38,7 @@ public class Game_Manager : MonoBehaviour
 
         StartCoroutine(TickDownTime());
 
-        
-    }
-
-    private void Game_Manager_TimeChanged()
-    {
-        
+        timeUntilSwitch = SwitchInterval;
     }
 
     IEnumerator TickDownTime()
