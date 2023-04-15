@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,6 +21,8 @@ public class Game_Manager : MonoBehaviour
 
     private Camera cam;
 
+    public event EventHandler TimeChanged;
+
     public enum GameplayStates
     {
         AboutToPlay,
@@ -34,6 +37,13 @@ public class Game_Manager : MonoBehaviour
         cam = GameObject.FindObjectOfType<Camera>();
 
         StartCoroutine(TickDownTime());
+
+        
+    }
+
+    private void Game_Manager_TimeChanged()
+    {
+        
     }
 
     IEnumerator TickDownTime()
@@ -79,10 +89,13 @@ public class Game_Manager : MonoBehaviour
     void Switch()
     {
         this.IsFuture = !this.IsFuture;
+
+        TimeChanged.Invoke(IsFuture, null);
         this.timeUntilSwitch = SwitchInterval;
 
         // TODO: Remove this code
         cam.backgroundColor = IsFuture ? new Color(0.3f, 0.3f, 0.3f) : new Color(0.4f, 0.4f, 0.4f);
     }
+
 }
 

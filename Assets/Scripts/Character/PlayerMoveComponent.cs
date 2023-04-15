@@ -16,7 +16,7 @@ public class PlayerMoveComponent : GroundedCharacter
 
     public bool IsCoyoteTime
     {
-        get => coyoteTimeElapsed < coyoteTime; 
+        get => coyoteTimeElapsed < coyoteTime;
     }
 
     private void Awake()
@@ -31,8 +31,10 @@ public class PlayerMoveComponent : GroundedCharacter
         AddDrag();
         CheckInputs();
         LimitVelocity();
-        transform.Translate(Time.deltaTime * velocity);
-        //Debug.Log($"isGrounded: {IsGrounded}   velocity:({velocity.x},{velocity.y})   jumping:{inputs.JumpInput}");
+
+        transform.Translate(velocity * Time.deltaTime);
+
+         // Debug.Log($"isGrounded: {IsGrounded}   velocity:({velocity.x},{velocity.y})");
     }
 
     private void SetHorizontalVelocity()
