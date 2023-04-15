@@ -19,6 +19,6 @@ public class MenuFunctionality : MonoBehaviour
     private void PlayButton_Clicked()
     {
         // TODO: Set the real play scene
-        SceneManager.LoadScene(0);        
+        SceneManager.LoadScene(2);        
     }
 }

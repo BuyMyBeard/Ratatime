@@ -12,21 +12,14 @@ public class Game_Manager : MonoBehaviour
 
     public GameplayStates State;
 
+    public event EventHandler TimeChanged;
+
     [SerializeField]
     private int SwitchInterval;
 
     private int timeUntilSwitch;
 
     private Camera cam;
-
-    public event EventHandler TimeChanged;
-
-    public enum GameplayStates
-    {
-        Playing,
-        Lost,
-        Won
-    }
 
     void Start()
     {
@@ -71,6 +64,13 @@ public class Game_Manager : MonoBehaviour
 
         // TODO: Remove this code
         cam.backgroundColor = IsFuture ? new Color(0.3f, 0.3f, 0.3f) : new Color(0.4f, 0.4f, 0.4f);
+    }
+
+    public enum GameplayStates
+    {
+        Playing,
+        Lost,
+        Won
     }
 }
 

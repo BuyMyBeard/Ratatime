@@ -15,6 +15,7 @@ public class HUDFunctionality : MonoBehaviour
         root = GetComponent<UIDocument>().rootVisualElement;
         countdownTimer = root.Q<Label>("Timer");
         manager = GameObject.FindObjectOfType<Game_Manager>();
+        SetTimer(null, null);
         manager.TimeChanged += SetTimer;
     }
 
