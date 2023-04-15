@@ -19,11 +19,9 @@ public class SideCollisionComponent : MonoBehaviour
             Vector2 depthShift = (Vector2)transform.position - closestPoint;
         
             float widthShift = depthShift.x < 0 ? -colliderSize.x / 2 : colliderSize.x / 2;
-            transform.Translate(depthShift.x + widthShift , 0, 0);
-            Debug.Log(depthShift.x);
-
-            Debug.Log($"({depthShift.x}, {depthShift.y}");
+            Debug.Log(widthShift);
+            transform.Translate(closestPoint.x - transform.position.x  + widthShift , 0, 0);
+            Debug.Log(closestPoint.x - transform.position.x);
         }
-
     }
 }
