@@ -10,9 +10,7 @@ public class Game_Manager : MonoBehaviour
 
     public bool IsFuture;
 
-    public GameplayStates State = GameplayStates.Playing;
-
-    public Text CountDownTimer;
+    public GameplayStates State;
 
     [SerializeField]
     private int SwitchInterval;
@@ -25,7 +23,6 @@ public class Game_Manager : MonoBehaviour
 
     public enum GameplayStates
     {
-        AboutToPlay,
         Playing,
         Lost,
         Won
@@ -34,7 +31,7 @@ public class Game_Manager : MonoBehaviour
     void Start()
     {
         // Assuming there is never more then one camera in the scene
-        cam = GameObject.FindObjectOfType<Camera>();
+        cam = FindObjectOfType<Camera>();
 
         StartCoroutine(TickDownTime());
 
@@ -50,9 +47,10 @@ public class Game_Manager : MonoBehaviour
             {
                 Time--;
                 timeUntilSwitch--;
-
-                // Update the UI
-                CountDownTimer.text = GetDisplayTime(Time);
+                if (TimeChanged != null)
+                {
+                    TimeChanged.Invoke(IsFuture, null);
+                }
             }
 
             // Check to see if the state has changed
@@ -65,32 +63,14 @@ public class Game_Manager : MonoBehaviour
             yield return new WaitForSeconds(1);
         }
     }
-
-    string GetDisplayTime(int time)
-    {
-        var seconds = time;
-        var minutes = 0;
-
-        while (seconds > 60)
-        {
-            minutes++;
-            seconds -= 60;
-        }
-
-        var displayString = $"{minutes} : {seconds}";
-        return displayString;
-    }
-
+   
     void Switch()
     {
         this.IsFuture = !this.IsFuture;
-
-        TimeChanged.Invoke(IsFuture, null);
         this.timeUntilSwitch = SwitchInterval;
 
         // TODO: Remove this code
         cam.backgroundColor = IsFuture ? new Color(0.3f, 0.3f, 0.3f) : new Color(0.4f, 0.4f, 0.4f);
     }
-
 }
 

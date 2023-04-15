@@ -1,7 +1,0 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
-    <ui:VisualElement style="flex-grow: 1; justify-content: flex-end; border-top-left-radius: 0; border-bottom-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0;">
-        <ui:VisualElement style="flex-grow: 0; flex-direction: row; justify-content: center; bottom: 547px; height: 171px;">
-            <ui:Button text="Start" display-tooltip-when-elided="true" name="StartButton" style="background-color: rgb(63, 63, 63); border-left-color: rgb(31, 31, 31); border-right-color: rgb(31, 31, 31); border-top-color: rgb(31, 31, 31); border-bottom-color: rgb(31, 31, 31); -unity-font-definition: initial; -unity-font: url(&apos;project://database/Assets/UI%20Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss?fileID=2230732570650464555&amp;guid=533dc955ecbc43c4a937832d89151ce6&amp;type=3#NotInter-Regular&apos;); -unity-font-style: normal; font-size: 18px; width: 674px; color: rgb(17, 17, 17); border-left-width: 2px; border-right-width: 2px; border-top-width: 2px; border-bottom-width: 2px;" />
-        </ui:VisualElement>
-    </ui:VisualElement>
-</ui:UXML>

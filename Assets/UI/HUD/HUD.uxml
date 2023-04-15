@@ -1,0 +1,5 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="Container" style="flex-grow: 1;">
+        <ui:Label text="Label" display-tooltip-when-elided="true" name="Timer" style="-unity-text-align: upper-center; font-size: 20px; color: rgba(22, 22, 22, 255);" />
+    </ui:VisualElement>
+</ui:UXML>
