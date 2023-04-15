@@ -25,7 +25,7 @@ public class PlayerMoveComponent : GroundedCharacter
         inputs = GetComponent<PlayerInputsComponent>();
     }
 
-    private void FixedUpdate()
+    new private void FixedUpdate()
     {
         newVelocity = Velocity;
         SetHorizontalVelocity();

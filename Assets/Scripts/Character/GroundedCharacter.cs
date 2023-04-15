@@ -41,6 +41,14 @@ public abstract class GroundedCharacter : MonoBehaviour
         RB = GetComponent<Rigidbody2D>();
     }
 
+    protected void FixedUpdate()
+    {
+        newVelocity = Velocity;
+        AddGravity();
+        LimitVelocity();
+        Velocity = newVelocity;
+    }
+
     protected virtual void LimitVelocity()
     {
         if (newVelocity.y < terminalVelocity)
