@@ -1,0 +1,9 @@
+Button
+{
+	margin-top: 2%;
+}
+
+#Buttons
+{
+	margin-top: 10%;
+}

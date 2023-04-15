@@ -1,0 +1,12 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Documents/MenuStylesheet.uss?fileID=7433441132597879392&amp;guid=fa7e67ee1a0f00646ba121ce6e4326dd&amp;type=3#MenuStylesheet" />
+    <ui:VisualElement name="Container" style="flex-grow: 1;">
+        <ui:VisualElement name="Content" style="flex-grow: 1; margin-left: 25%; margin-right: 25%;">
+            <ui:Label text="*Game Name Here*" display-tooltip-when-elided="true" name="Header" style="font-size: 34px; -unity-text-align: upper-center;" />
+            <ui:VisualElement name="Buttons">
+                <ui:Button text="Play" display-tooltip-when-elided="true" name="Play_Button" />
+                <ui:Button text="Options" display-tooltip-when-elided="true" name="Options_Button" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
