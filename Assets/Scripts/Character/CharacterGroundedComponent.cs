@@ -26,6 +26,7 @@ public class CharacterGroundedComponent : MonoBehaviour
             playerMove.transform.position = collision.ClosestPoint(playerMove.transform.position) + new Vector2(0, characterHeight / 2);
         }
     }
+
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.layer == 6)

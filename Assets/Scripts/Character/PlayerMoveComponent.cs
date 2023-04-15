@@ -25,17 +25,20 @@ public class PlayerMoveComponent : MonoBehaviour
     {
         get => velocity.y < 0;
     }
+
     public bool IsJumping
     {
         get => velocity.y > 0;
     }
+
     public bool IsGrounded
     {
         get => IsTouchingGround || IsTouchingPlatform;
     }
+
     public bool IsCoyoteTime
     {
-        get => coyoteTimeElapsed < coyoteTime; 
+        get => coyoteTimeElapsed < coyoteTime;
     }
 
     private void Awake()
@@ -50,8 +53,10 @@ public class PlayerMoveComponent : MonoBehaviour
         AddDrag();
         CheckInputs();
         LimitVelocity();
-        transform.Translate(Time.deltaTime * velocity);
-        //Debug.Log($"isGrounded: {IsGrounded}   velocity:({velocity.x},{velocity.y})   jumping:{inputs.JumpInput}");
+
+        transform.Translate(velocity * Time.deltaTime);
+
+         // Debug.Log($"isGrounded: {IsGrounded}   velocity:({velocity.x},{velocity.y})");
     }
 
     private void SetHorizontalVelocity()
