@@ -4,35 +4,16 @@ using System.Linq.Expressions;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerMoveComponent : MonoBehaviour
+public class PlayerMoveComponent : GroundedCharacter
 {
-    [SerializeField] float gravAcceleration = -5;
     [SerializeField] float ascendingDrag = 1;
     [SerializeField] float holdingJumpDrag = 1;
-    [SerializeField] float jumpVelocity = 1;
-    [SerializeField] float terminalVelocity = -1;
-    [SerializeField] float horizontalSpeed = 1;
     [SerializeField] float coyoteTime = 0.2f;
 
     PlayerInputsComponent inputs;
-    Vector2 velocity = Vector2.zero;
+
     float coyoteTimeElapsed = 0;
 
-    public bool IsTouchingGround { get; set; }
-    public bool IsTouchingPlatform { get; set; }
-
-    public bool IsFalling
-    {
-        get => velocity.y < 0;
-    }
-    public bool IsJumping
-    {
-        get => velocity.y > 0;
-    }
-    public bool IsGrounded
-    {
-        get => IsTouchingGround || IsTouchingPlatform;
-    }
     public bool IsCoyoteTime
     {
         get => coyoteTimeElapsed < coyoteTime; 
@@ -71,13 +52,7 @@ public class PlayerMoveComponent : MonoBehaviour
         }
     }
 
-    private void LimitVelocity()
-    {
-        if (velocity.y < terminalVelocity)
-            velocity.y = terminalVelocity;
-    }
-
-    private void AddGravity()
+    protected override void AddGravity()
     {
         if (IsGrounded)
             velocity.y = 0;
