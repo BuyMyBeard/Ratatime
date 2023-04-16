@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -43,7 +44,6 @@ public abstract class GroundedCharacter : MonoBehaviour
 
     protected void FixedUpdate()
     {
-        newVelocity = Velocity;
         AddGravity();
         LimitVelocity();
         Velocity = newVelocity;
