@@ -29,6 +29,8 @@ public class PlayerMoveComponent : GroundedCharacter
     {
         newVelocity = Velocity;
         SetHorizontalVelocity();
+        CheckGround();
+        AddSlopeCompensation();
         AddGravity();
         AddDrag();
         CheckInputs();
@@ -49,9 +51,9 @@ public class PlayerMoveComponent : GroundedCharacter
             newVelocity.y = jumpVelocity;
 
         //can be optimized by exposing InputActions and tying events to them
-        if (inputs.DropInput && IsTouchingPlatform)
+        if (inputs.DropInput && isTouchingPlatform)
         {
-            IsTouchingPlatform = false;
+            isTouchingPlatform = false;
         }
     }
 
