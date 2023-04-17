@@ -25,7 +25,7 @@ public class GroundCollisionComponent : MonoBehaviour
                 OnLand.Invoke(this, null);
             }
 
-            characterMovement.IsTouchingPlatform = true;
+            characterMovement.isTouchingPlatform = true;
             characterMovement.transform.position = collision.ClosestPoint(characterMovement.transform.position) + new Vector2(0, characterHeight / 2);
         }                                            
         else if (collision.gameObject.layer == 7 && characterMovement.IsFalling)
@@ -35,7 +35,7 @@ public class GroundCollisionComponent : MonoBehaviour
                 OnLand.Invoke(this, null);
             }
             
-            characterMovement.IsTouchingGround = true;
+            characterMovement.isTouchingGround = true;
             characterMovement.transform.position = collision.ClosestPoint(characterMovement.transform.position) + new Vector2(0, characterHeight / 2);
         }
     }
@@ -43,13 +43,13 @@ public class GroundCollisionComponent : MonoBehaviour
     {
         if (collision.gameObject.layer == 6)
         {
-            characterMovement.IsTouchingPlatform = false;
+            characterMovement.isTouchingPlatform = false;
             if (characterMovement is PlayerMoveComponent)
             (characterMovement as PlayerMoveComponent).ResetCoyoteTime();
         }
         else if (collision.gameObject.layer == 7)
         {
-            characterMovement.IsTouchingGround = false;
+            characterMovement.isTouchingGround = false;
             if (characterMovement is PlayerMoveComponent)
                 (characterMovement as PlayerMoveComponent).ResetCoyoteTime();
         }
