@@ -34,8 +34,8 @@ public class PlayerMoveComponent : GroundedCharacter
         SetHorizontalVelocity();
         AddGravity();
         AddSlopeCompensation();
-        AddDrag();
         CheckInputs();
+        AddDrag();
         LimitVelocity();
         Velocity = newVelocity;
         if (IsGrounded)
@@ -56,16 +56,14 @@ public class PlayerMoveComponent : GroundedCharacter
     {
         if (inputs.JumpPressInput && (IsGrounded || IsCoyoteTime) && !IsJumping)
             newVelocity.y = jumpVelocity;
-
-        //can be optimized by exposing InputActions and tying events to them
-        if (inputs.DropInput && isTouchingPlatform)
-        {
-            isTouchingPlatform = false;
-        }
     }
 
     protected override void AddGravity()
     {
+        if (inputs.DropInput && isTouchingPlatform)
+        {
+            isTouchingPlatform = false;
+        }
         if (IsGrounded)
             newVelocity.y = 0;
         else
