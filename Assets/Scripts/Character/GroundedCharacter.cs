@@ -107,15 +107,19 @@ public abstract class GroundedCharacter : MonoBehaviour
     }
     protected void GroundCheck(Vector2 rayOrigin)
     {
-        isTouchingGround = !IsJumping && Physics2D.Raycast(rayOrigin, Vector2.down, groundCheckDistance, groundLayer);
-        isTouchingPlatform = !IsJumping && Physics2D.Raycast(rayOrigin, Vector2.down, groundCheckDistance, platformLayer);
+        bool wasGrounded = IsGrounded;
+        RaycastHit2D groundHit = Physics2D.Raycast(rayOrigin, Vector2.down, groundCheckDistance, groundLayer);
+        RaycastHit2D platformHit = Physics2D.Raycast(rayOrigin, Vector2.down, groundCheckDistance, platformLayer);
+        isTouchingGround = !IsJumping && groundHit;
+        isTouchingPlatform = !IsJumping && platformHit;
 
-        //isTouchingGround = IsFalling && Physics2D.BoxCast(
-        //    rayOrigin, new Vector2(ColliderSize.x, 0.01f),
-        //    0, Vector2.down, groundCheckDistance, groundLayer);
-        //isTouchingPlatform = IsFalling && Physics2D.BoxCast(
-        //    rayOrigin, new Vector2(ColliderSize.x, 0.01f),
-        //    0, Vector2.down, groundCheckDistance, platformLayer);
+        if (!wasGrounded && IsGrounded)
+        {
+            if (isTouchingGround)
+                transform.Translate(0, -groundHit.distance, 0);
+            else
+                transform.Translate(0, -platformHit.distance, 0);
+        }
         if (!IsGrounded)
             slope = Slope.None;
         Debug.DrawRay(rayOrigin, Vector2.down * groundCheckDistance, Color.red);
