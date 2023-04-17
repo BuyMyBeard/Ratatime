@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -28,21 +29,27 @@ public class PlayerMoveComponent : GroundedCharacter
     new private void FixedUpdate()
     {
         newVelocity = Velocity;
+        FloorCheck();
+        //WallCheck();
         SetHorizontalVelocity();
-        CheckGround();
-        AddSlopeCompensation();
         AddGravity();
+        AddSlopeCompensation();
         AddDrag();
         CheckInputs();
         LimitVelocity();
         Velocity = newVelocity;
-
+        if (IsGrounded)
+            ResetCoyoteTime();
          // Debug.Log($"isGrounded: {IsGrounded}   velocity:({velocity.x},{velocity.y})");
     }
 
     private void SetHorizontalVelocity()
     {
         newVelocity.x = inputs.HorizontalInput * horizontalSpeed;
+        if (newVelocity.x == 0)
+            RB.sharedMaterial = highFriction;
+        else
+            RB.sharedMaterial = noFriction;
     }
 
     private void CheckInputs()

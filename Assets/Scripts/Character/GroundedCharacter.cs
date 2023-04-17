@@ -2,10 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Unity.VisualScripting;
 using UnityEditor.Tilemaps;
 using UnityEngine;
 using UnityEngine.Android;
 using UnityEngine.Windows;
+using Unity.Mathematics;
+using UnityEditor.Build.Content;
 
 public enum Slope { Down, Up, None };
 
@@ -17,6 +20,14 @@ public abstract class GroundedCharacter : MonoBehaviour
     [SerializeField] protected float jumpVelocity;
     [SerializeField] protected float groundCheckDistance;
     [SerializeField] protected float compensation;
+    [SerializeField] LayerMask groundLayer;
+    [SerializeField] LayerMask platformLayer;
+    [SerializeField] protected PhysicsMaterial2D noFriction;
+    [SerializeField] protected PhysicsMaterial2D highFriction;
+
+    [SerializeField] protected bool wallOnLeft;
+    [SerializeField] protected bool wallOnRight;
+    [SerializeField] protected bool ceiling;
 
     public bool isTouchingGround, isTouchingPlatform;
     public Slope slope = Slope.None;
@@ -35,11 +46,11 @@ public abstract class GroundedCharacter : MonoBehaviour
 
     public bool IsFalling
     {
-        get => Velocity.y < 0;
+        get => !IsGrounded && Velocity.y < 0;
     }
     public bool IsJumping
     {
-        get => Velocity.y > 0;
+        get => !IsGrounded && Velocity.y > 0;
     }
     public bool IsGrounded
     {
@@ -88,37 +99,63 @@ public abstract class GroundedCharacter : MonoBehaviour
             newVelocity.y = -newVelocity.x;
     }
 
-    protected void CheckGround()
+    protected virtual void FloorCheck()
     {
-        Vector2 rayOrigin = transform.position - new Vector3(0, ColliderSize.y / 2 - compensation);
+        Vector2 rayOrigin = transform.position - new Vector3(0, ColliderSize.y / 2);
         SlopeCheck(rayOrigin);
         GroundCheck(rayOrigin);
     }
-    void GroundCheck(Vector2 rayOrigin)
+    protected void GroundCheck(Vector2 rayOrigin)
     {
-        //TODO: Refactor grounded check by removing entire groundCollisionComponent and using raycast instead
-        RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.down, groundCheckDistance, 7);
-        if (hit)
-        {
-            if (hit.normal.x == 0)
-                slope = Slope.None;
-        }
-        else
+        isTouchingGround = !IsJumping && Physics2D.Raycast(rayOrigin, Vector2.down, groundCheckDistance, groundLayer);
+        isTouchingPlatform = !IsJumping && Physics2D.Raycast(rayOrigin, Vector2.down, groundCheckDistance, platformLayer);
+
+        //isTouchingGround = IsFalling && Physics2D.BoxCast(
+        //    rayOrigin, new Vector2(ColliderSize.x, 0.01f),
+        //    0, Vector2.down, groundCheckDistance, groundLayer);
+        //isTouchingPlatform = IsFalling && Physics2D.BoxCast(
+        //    rayOrigin, new Vector2(ColliderSize.x, 0.01f),
+        //    0, Vector2.down, groundCheckDistance, platformLayer);
+        if (!IsGrounded)
             slope = Slope.None;
-        Debug.DrawRay(rayOrigin, hit.normal, Color.red);
+        Debug.DrawRay(rayOrigin, Vector2.down * groundCheckDistance, Color.red);
     }
     private void SlopeCheck(Vector2 rayOrigin)
     {
-        RaycastHit2D slopeHitFront = Physics2D.Raycast(rayOrigin, Vector2.right, groundCheckDistance, 7);
-        RaycastHit2D slopeHitBack = Physics2D.Raycast(rayOrigin, Vector2.left, groundCheckDistance, 7);
-
-        if (slopeHitFront)
+        RaycastHit2D slopeHitFront = Physics2D.Raycast(rayOrigin, Vector2.right, groundCheckDistance, groundLayer);
+        RaycastHit2D slopeHitBack = Physics2D.Raycast(rayOrigin, Vector2.left, groundCheckDistance, groundLayer);
+        if (slopeHitBack && slopeHitFront)
+        {
+            slope = Slope.None;
+            //fix by finding the closest point to the ground that
+            //won't interact with front and back colliders and translate there in 1 instruction instead
+            //doing so will make it smoother
+            transform.Translate(Vector2.up * compensation);
+        }
+        else if (slopeHitFront)
             slope = Slope.Up;
         else if (slopeHitBack)
             slope = Slope.Down;
         else
             slope = Slope.None;
-        Debug.DrawRay(rayOrigin, slopeHitBack.normal , Color.green);
-        Debug.DrawRay(rayOrigin, slopeHitFront.normal, Color.blue);
+        Debug.DrawRay(rayOrigin,Vector2.right * groundCheckDistance, Color.green);
+        Debug.DrawRay(rayOrigin, Vector2.left * groundCheckDistance, Color.blue);
+    }
+    protected void WallCheck()
+    {
+        float xOffset = ColliderSize.x / 2;
+        float yOffset = ColliderSize.y / 2;
+        wallOnLeft = Physics2D.BoxCast(
+            new Vector2(transform.position.x - xOffset, transform.position.y),
+            new Vector2(0.01f, ColliderSize.y),
+            0, Vector2.left, groundCheckDistance, groundLayer);
+        wallOnRight = Physics2D.BoxCast(
+            new Vector2(transform.position.x + xOffset, transform.position.y),
+            new Vector2(0.01f, ColliderSize.y),
+            0, Vector2.right, groundCheckDistance, groundLayer);
+        ceiling = Physics2D.BoxCast(
+            new Vector2(transform.position.x, transform.position.y + yOffset),
+            new Vector2(ColliderSize.x, 0.01f),
+            0, Vector2.up, groundCheckDistance, groundLayer);
     }
 }
