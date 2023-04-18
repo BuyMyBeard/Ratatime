@@ -20,21 +20,16 @@ public abstract class GroundedCharacter : MonoBehaviour
     [SerializeField] protected float jumpVelocity;
     [SerializeField] protected float groundCheckDistance;
     [SerializeField] protected float compensation;
-    [SerializeField] LayerMask groundLayer;
-    [SerializeField] LayerMask platformLayer;
+    [SerializeField] protected LayerMask groundLayer;
+    [SerializeField] protected LayerMask platformLayer;
     [SerializeField] protected PhysicsMaterial2D noFriction;
     [SerializeField] protected PhysicsMaterial2D highFriction;
 
-    [SerializeField] protected bool wallOnLeft;
-    [SerializeField] protected bool wallOnRight;
-    [SerializeField] protected bool ceiling;
-
-    public bool isTouchingGround, isTouchingPlatform;
-    public Slope slope = Slope.None;
-
-    public Rigidbody2D RB { get; private set; }
-    public CapsuleCollider2D CC { get; private set; }
-    public Vector2 ColliderSize { get; private set; }
+    protected bool isTouchingGround, isTouchingPlatform;
+    private Slope slope = Slope.None;
+    public Rigidbody2D RB { get; protected set; }
+    public CapsuleCollider2D CC { get; protected set; }
+    public Vector2 ColliderSize { get; protected set; }
 
     public Vector2 Velocity
     {
@@ -120,46 +115,27 @@ public abstract class GroundedCharacter : MonoBehaviour
             else
                 transform.Translate(0, -platformHit.distance, 0);
         }
-        if (!IsGrounded)
+        else if (!IsGrounded)
             slope = Slope.None;
+        //supposed to compensate for moving up slope, but breaks a bunch of stuff
+        //else if (isTouchingGround && slope == Slope.None && groundHit.distance != 0)
+        //    transform.Translate(0, -groundHit.distance, 0);
+
         Debug.DrawRay(rayOrigin, Vector2.down * groundCheckDistance, Color.red);
     }
     private void SlopeCheck(Vector2 rayOrigin)
     {
-        RaycastHit2D slopeHitFront = Physics2D.Raycast(rayOrigin, Vector2.right, groundCheckDistance, groundLayer);
-        RaycastHit2D slopeHitBack = Physics2D.Raycast(rayOrigin, Vector2.left, groundCheckDistance, groundLayer);
-        if (slopeHitBack && slopeHitFront)
-        {
+        Slope oldSlope = slope;
+        RaycastHit2D slopeHitRight = Physics2D.Raycast(rayOrigin, Vector2.right, groundCheckDistance, groundLayer);
+        RaycastHit2D slopeHitLeft = Physics2D.Raycast(rayOrigin, Vector2.left, groundCheckDistance, groundLayer);
+        if (slopeHitLeft == slopeHitRight) //XNOR
             slope = Slope.None;
-            //fix by finding the closest point to the ground that
-            //won't interact with front and back colliders and translate there in 1 instruction instead
-            //doing so will make it smoother
-            transform.Translate(Vector2.up * compensation);
-        }
-        else if (slopeHitFront)
+        else if (slopeHitRight)
             slope = Slope.Up;
-        else if (slopeHitBack)
+        else //slopeHitBack
             slope = Slope.Down;
-        else
-            slope = Slope.None;
+
         Debug.DrawRay(rayOrigin,Vector2.right * groundCheckDistance, Color.green);
         Debug.DrawRay(rayOrigin, Vector2.left * groundCheckDistance, Color.blue);
-    }
-    protected void WallCheck()
-    {
-        float xOffset = ColliderSize.x / 2;
-        float yOffset = ColliderSize.y / 2;
-        wallOnLeft = Physics2D.BoxCast(
-            new Vector2(transform.position.x - xOffset, transform.position.y),
-            new Vector2(0.01f, ColliderSize.y),
-            0, Vector2.left, groundCheckDistance, groundLayer);
-        wallOnRight = Physics2D.BoxCast(
-            new Vector2(transform.position.x + xOffset, transform.position.y),
-            new Vector2(0.01f, ColliderSize.y),
-            0, Vector2.right, groundCheckDistance, groundLayer);
-        ceiling = Physics2D.BoxCast(
-            new Vector2(transform.position.x, transform.position.y + yOffset),
-            new Vector2(ColliderSize.x, 0.01f),
-            0, Vector2.up, groundCheckDistance, groundLayer);
     }
 }

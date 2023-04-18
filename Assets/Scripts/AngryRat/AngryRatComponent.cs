@@ -24,6 +24,7 @@ public class AngryRatComponent : GroundedCharacter
 
     private void Update()
     {
+        //I don't think we should findGameObject every frame, lets do it once on awake
         Aggravated = Vector2.Distance(GameObject.FindGameObjectWithTag("Player").transform.position, transform.position) < targetingComponent.MaxTargetDistance;
     }
 

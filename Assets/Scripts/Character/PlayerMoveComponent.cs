@@ -30,7 +30,6 @@ public class PlayerMoveComponent : GroundedCharacter
     {
         newVelocity = Velocity;
         FloorCheck();
-        //WallCheck();
         SetHorizontalVelocity();
         AddGravity();
         AddSlopeCompensation();
@@ -40,16 +39,11 @@ public class PlayerMoveComponent : GroundedCharacter
         Velocity = newVelocity;
         if (IsGrounded)
             ResetCoyoteTime();
-         // Debug.Log($"isGrounded: {IsGrounded}   velocity:({velocity.x},{velocity.y})");
     }
 
     private void SetHorizontalVelocity()
     {
         newVelocity.x = inputs.HorizontalInput * horizontalSpeed;
-        if (newVelocity.x == 0)
-            RB.sharedMaterial = highFriction;
-        else
-            RB.sharedMaterial = noFriction;
     }
 
     private void CheckInputs()
@@ -65,11 +59,15 @@ public class PlayerMoveComponent : GroundedCharacter
             isTouchingPlatform = false;
         }
         if (IsGrounded)
+        {
             newVelocity.y = 0;
+            RB.sharedMaterial = highFriction;
+        }
         else
         {
             newVelocity.y += gravAcceleration * Time.deltaTime;
             coyoteTimeElapsed += Time.deltaTime;
+            RB.sharedMaterial = noFriction;
         }
     }
 
