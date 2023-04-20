@@ -15,12 +15,12 @@ TagManager:
   - Ground
   - CharacterCollisionTrigger
   - Player
+  - Background
   - 
   - 
   - 
-  - 
-  - 
-  - 
+  - Death Pit
+  - Camera
   - 
   - 
   - 

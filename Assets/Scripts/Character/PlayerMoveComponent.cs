@@ -12,6 +12,7 @@ public class PlayerMoveComponent : GroundedCharacter
     [SerializeField] float coyoteTime = 0.2f;
 
     PlayerInputsComponent inputs;
+    public bool inDeathPit = false;
 
     float coyoteTimeElapsed = 0;
 
@@ -43,7 +44,10 @@ public class PlayerMoveComponent : GroundedCharacter
 
     private void SetHorizontalVelocity()
     {
-        newVelocity.x = inputs.HorizontalInput * horizontalSpeed;
+        if (inDeathPit)
+            newVelocity.x = 0;
+        else
+            newVelocity.x = inputs.HorizontalInput * horizontalSpeed;
     }
 
     private void CheckInputs()
