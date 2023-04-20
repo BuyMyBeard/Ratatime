@@ -14,7 +14,7 @@ public class DeathPitComponent : MonoBehaviour
         }
         else
         {
-            collision.gameObject.SetActive(false);
+            StartCoroutine(DisableCharacter(collision.gameObject));
         }
     }
 
@@ -25,6 +25,11 @@ public class DeathPitComponent : MonoBehaviour
         yield return new WaitForSeconds(respawnTimer);
         playerMove.inDeathPit = false;
         player.transform.position = respawnLocation.position;
+    }
+    IEnumerator DisableCharacter(GameObject character)
+    {
+        yield return new WaitForSeconds(respawnTimer);
+        character.SetActive(false);
     }
 }
 
