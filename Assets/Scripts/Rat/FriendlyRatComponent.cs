@@ -17,18 +17,15 @@ public class FriendlyRatComponent : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         trade = player.GetComponent<PlayerTradeComponent>();
     }
-    // Update is called once per frame
+    //can be optimized with coroutines if needed
     void Update()
     {
-        if (!hasTraded)
-        {
-            SqrDistanceFromPlayer = (player.transform.position - transform.position).sqrMagnitude;
-            bool playerInRange = SqrDistanceFromPlayer < tradeWindowDisplayDistance * tradeWindowDisplayDistance;
-            if (playerInRange)
-            {
-                trade.ProposeTrade(this);
-            }
-        }
+        if (hasTraded)
+            return;
+        SqrDistanceFromPlayer = (player.transform.position - transform.position).sqrMagnitude;
+        bool playerInRange = SqrDistanceFromPlayer < tradeWindowDisplayDistance * tradeWindowDisplayDistance;
+        if (playerInRange)
+            trade.ProposeTrade(this);
     }
 
     public void Select()

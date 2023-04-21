@@ -24,22 +24,25 @@ public class PlayerTradeComponent : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (potentialTrader != null && canTrade)
+        if (potentialTrader == null || !canTrade)
         {
-            if (inputs.InteractInput)
-            {
-                Trade();
-            }
-            else if (previousTrader != null && previousTrader != potentialTrader)
-            {
+            if (previousTrader != null)
                 previousTrader.Deselect();
-                potentialTrader.Select();
-            }
-            else
-                potentialTrader.Select();
+            return;
         }
-        else if (previousTrader != null)
+
+        if (inputs.InteractInput)
+        {
+            Trade();
+        }
+        else if (previousTrader != null && previousTrader != potentialTrader)
+        {
             previousTrader.Deselect();
+            potentialTrader.Select();
+        }
+        else
+            potentialTrader.Select();
+
     }
     public void ProposeTrade(FriendlyRatComponent friendlyRat)
     {
@@ -66,8 +69,6 @@ public class PlayerTradeComponent : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Cheese"))
-        {
             cheeseCount++;
-        }
     }
 }
