@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -13,6 +14,7 @@ public class PlayerMoveComponent : GroundedCharacter
 
     PlayerInputsComponent inputs;
     public bool inDeathPit = false;
+    bool isDroppingPlatform = false;
 
     float coyoteTimeElapsed = 0;
 
@@ -47,7 +49,13 @@ public class PlayerMoveComponent : GroundedCharacter
         if (inDeathPit)
             newVelocity.x = 0;
         else
+        {
             newVelocity.x = inputs.HorizontalInput * horizontalSpeed;
+            if (inputs.HorizontalInput > 0)
+                Sprite.flipX = false;
+            else if (inputs.HorizontalInput < 0)
+                Sprite.flipX = true;
+        }
     }
 
     private void CheckInputs()
@@ -58,10 +66,12 @@ public class PlayerMoveComponent : GroundedCharacter
 
     protected override void AddGravity()
     {
-        if (inputs.DropInput && isTouchingPlatform)
+        if (inputs.DropInput && isTouchingPlatform && !isDroppingPlatform)
         {
-            isTouchingPlatform = false;
+            StartCoroutine(DropPlatform());
         }
+        if (isDroppingPlatform)
+            isTouchingPlatform = false;
         if (IsGrounded)
         {
             newVelocity.y = 0;
@@ -73,6 +83,15 @@ public class PlayerMoveComponent : GroundedCharacter
             coyoteTimeElapsed += Time.deltaTime;
             RB.sharedMaterial = noFriction;
         }
+    }
+
+    IEnumerator DropPlatform()
+    {
+        coyoteTimeElapsed += coyoteTime;
+        newVelocity.y = 0;
+        isDroppingPlatform = true;
+        yield return new WaitForSeconds(0.1f);
+        isDroppingPlatform = false;
     }
 
     private void AddDrag()

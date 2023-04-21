@@ -9,7 +9,7 @@ using UnityEngine.Android;
 using UnityEngine.Windows;
 using Unity.Mathematics;
 using UnityEditor.Build.Content;
-
+public enum GroundedCharacterAnimations { Idle, Walking, Jumping, Raising, Falling, Landing }
 public enum Slope { Down, Up, None };
 
 public abstract class GroundedCharacter : MonoBehaviour
@@ -24,12 +24,16 @@ public abstract class GroundedCharacter : MonoBehaviour
     [SerializeField] protected LayerMask platformLayer;
     [SerializeField] protected PhysicsMaterial2D noFriction;
     [SerializeField] protected PhysicsMaterial2D highFriction;
+    [SerializeField] protected float SlopeUpCompensation = 0.05f;
 
     protected bool isTouchingGround, isTouchingPlatform;
+    protected Animator animator;
     private Slope slope = Slope.None;
+    protected SpriteRenderer Sprite { get; private set; }
     public Rigidbody2D RB { get; protected set; }
     public CapsuleCollider2D CC { get; protected set; }
     public Vector2 ColliderSize { get; protected set; }
+
 
     public Vector2 Velocity
     {
@@ -56,15 +60,24 @@ public abstract class GroundedCharacter : MonoBehaviour
         get => slope != Slope.None;
     }
 
+    public bool IsWalking
+    {
+        get => IsGrounded && Velocity.x != 0;
+    }
+
     protected void Awake()
     {
         RB = GetComponent<Rigidbody2D>();
         CC = GetComponent<CapsuleCollider2D>();
+        Sprite = GetComponentInChildren<SpriteRenderer>();
         ColliderSize = CC.size;
+        //animator = GetComponent<Animator>();
     }
 
     protected void FixedUpdate()
     {
+        newVelocity = Velocity;
+        FloorCheck();
         AddGravity();
         LimitVelocity();
         Velocity = newVelocity;
@@ -135,7 +148,25 @@ public abstract class GroundedCharacter : MonoBehaviour
         else //slopeHitBack
             slope = Slope.Down;
 
+        if (oldSlope != Slope.None && slope == Slope.None && IsGrounded)
+            StartCoroutine(CompensateForSlopeUp());
         Debug.DrawRay(rayOrigin,Vector2.right * groundCheckDistance, Color.green);
         Debug.DrawRay(rayOrigin, Vector2.left * groundCheckDistance, Color.blue);
+    }
+    protected virtual void SetAnimationParameters()
+    {
+        animator.SetBool("IsWalking", IsWalking);
+        animator.SetBool("IsJumping", IsJumping);
+        animator.SetBool("IsFalling", IsFalling);
+    }
+    IEnumerator CompensateForSlopeUp()
+    {
+        yield return new WaitForSeconds(SlopeUpCompensation);
+        Vector2 rayOrigin = transform.position - new Vector3(0, ColliderSize.y / 2);
+        RaycastHit2D groundHit = Physics2D.Raycast(rayOrigin, Vector2.down, groundCheckDistance, groundLayer);
+        if (groundHit && IsGrounded && slope == Slope.None)
+        {
+            transform.Translate(0, -groundHit.distance, 0);
+        }
     }
 }
