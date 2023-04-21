@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2113083737069108499}
   - component: {fileID: 3906754084804829530}
+  - component: {fileID: 2873157280233526969}
   - component: {fileID: 1706552459537519675}
   - component: {fileID: 457661658}
   - component: {fileID: 457661663}
@@ -67,6 +68,19 @@ MonoBehaviour:
   holdingJumpDrag: 5
   coyoteTime: 0.1
   inDeathPit: 0
+--- !u!114 &2873157280233526969
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5236775599910994474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98a45e7a45d96814e9415e6c48f12047, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  iFramesLength: 1
 --- !u!114 &1706552459537519675
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -39,7 +39,7 @@ public class FriendlyRatComponent : MonoBehaviour
     public void Trade()
     {
         Debug.Log("Trading");
-        tradeWindow.SetActive(false);
+        Deselect();
         hasTraded = true;
     }
 }

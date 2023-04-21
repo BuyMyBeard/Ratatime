@@ -10,7 +10,7 @@ public class DeathPitComponent : MonoBehaviour
     {
         if (collision.gameObject.layer == 9)
         {
-            StartCoroutine(RespawnPlayer(collision.gameObject));
+            StartCoroutine(RespawnPlayer(collision.gameObject)); 
         }
         else
         {
@@ -25,6 +25,7 @@ public class DeathPitComponent : MonoBehaviour
         yield return new WaitForSeconds(respawnTimer);
         playerMove.inDeathPit = false;
         player.transform.position = respawnLocation.position;
+        StartCoroutine(player.GetComponent<PlayerDamageComponent>().BecomeInvincible());
     }
     IEnumerator DisableCharacter(GameObject character)
     {
