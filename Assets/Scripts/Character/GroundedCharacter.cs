@@ -25,6 +25,7 @@ public abstract class GroundedCharacter : MonoBehaviour
     [SerializeField] protected PhysicsMaterial2D noFriction;
     [SerializeField] protected PhysicsMaterial2D highFriction;
     [SerializeField] protected float SlopeUpCompensation = 0.05f;
+    AudioManagerComponent audioManager;
 
     protected bool isTouchingGround, isTouchingPlatform;
     protected Animator animator;
@@ -71,6 +72,7 @@ public abstract class GroundedCharacter : MonoBehaviour
         CC = GetComponent<CapsuleCollider2D>();
         Sprite = GetComponentInChildren<SpriteRenderer>();
         ColliderSize = CC.size;
+        audioManager = GetComponent<AudioManagerComponent>();
         //animator = GetComponent<Animator>();
     }
 

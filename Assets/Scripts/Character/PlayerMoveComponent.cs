@@ -51,7 +51,6 @@ public class PlayerMoveComponent : GroundedCharacter
 
     private void SetHorizontalVelocity()
     {
-        Debug.Log(inputs.HorizontalInput);
         if (inDeathPit)
             newVelocity.x = 0;
         else

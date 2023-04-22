@@ -8,6 +8,7 @@ public class CheeseComponent : MonoBehaviour
     [SerializeField] float frequency;
     float elapsedTime = 0;
     float previousDisplacement = 0;
+    public bool IsCollected { get; private set; } = false;
 
     private void Awake()
     {
@@ -15,9 +16,11 @@ public class CheeseComponent : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        IsCollected = true;
         GetComponentInChildren<SpriteRenderer>().enabled = false;
-        GetComponent<CircleCollider2D>().enabled = false;    
-        StopCoroutine(MoveOverTime());
+        GetComponent<Collider2D>().enabled = false;
+        collision.GetComponent<PlayerTradeComponent>().CollectCheese();
+        StopAllCoroutines();
     }
     IEnumerator MoveOverTime()
     {
