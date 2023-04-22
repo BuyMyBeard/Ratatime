@@ -35,6 +35,7 @@ public abstract class GroundedCharacter : MonoBehaviour
     public CapsuleCollider2D CC { get; protected set; }
     public Vector2 ColliderSize { get; protected set; }
 
+    public event EventHandler OnLand;
 
     public Vector2 Velocity
     {
@@ -125,6 +126,7 @@ public abstract class GroundedCharacter : MonoBehaviour
 
         if (!wasGrounded && IsGrounded)
         {
+            InvokeOnLand();
             if (isTouchingGround)
                 transform.Translate(0, -groundHit.distance, 0);
             else
@@ -165,5 +167,11 @@ public abstract class GroundedCharacter : MonoBehaviour
         {
             transform.Translate(0, -groundHit.distance, 0);
         }
+    }
+
+    void InvokeOnLand()
+    {
+        if (OnLand != null)
+            OnLand.Invoke(this, null);
     }
 }
