@@ -8,8 +8,13 @@ using UnityEngine;
 
 public class TargetingComponent : MonoBehaviour
 {
+    #region Public Fields
     public float MaxTargetDistance;
 
+    public int HorizontalMoveCommand;
+    #endregion
+
+    #region Serialized Fields
     [SerializeField] private float TargetDeadZone;
 
     [SerializeField] private GameObject DebugTargetDisplay;
@@ -21,10 +26,10 @@ public class TargetingComponent : MonoBehaviour
     [SerializeField] private float AttemptJumpRadius;
 
     [SerializeField] private float JumpTelegraph;
+    #endregion
 
-    public int HorizontalMoveCommand;
-
-    private Vector2 target;
+    #region Private Fields
+    public Vector2 target;
 
     private AngryRatComponent rat;
 
@@ -34,37 +39,23 @@ public class TargetingComponent : MonoBehaviour
 
     private float targetDistance => Vector2.Distance(transform.position, target);
 
-    private MoveModes mode;
+    public MoveModes mode;
 
-    private GroundCollisionComponent groundCollisionComponent;
+    public event EventHandler ReachedTarget;
 
-    private void Awake()
+    Pathfinder pathfinder;
+    #endregion
+
+    #region Unity Methods
+
+    void Awake()
     {
         rat = GetComponent<AngryRatComponent>();
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-        groundCollisionComponent = GetComponentInChildren<GroundCollisionComponent>();
+        var groundCollisionComponent = GetComponent<GroundedCharacter>();
         groundCollisionComponent.OnLand += EndJump;
+        pathfinder = GetComponent<Pathfinder>();
         StartCoroutine(SearchForTarget());
-    }
-
-    IEnumerator SearchForTarget()
-    {
-        while (true)
-        {
-            if (!jumpLock)
-                React();
-            yield return new WaitForSeconds(ReactionTime);
-        }
-    }
-
-    void SetTarget(Vector2 t)
-    {
-        target = t;
-        if (DebugMode)
-        {
-            var debug = Instantiate(DebugTargetDisplay, new Vector3(t.x, t.y, 0), Quaternion.identity);
-            GameObject.Destroy(debug, ReactionTime);
-        }
     }
 
     void Update()
@@ -80,6 +71,36 @@ public class TargetingComponent : MonoBehaviour
 
         Debug.Log(mode);
     }
+    #endregion
+
+    #region Coroutines
+    IEnumerator SearchForTarget()
+    {
+        while (true)
+        {
+            if (!jumpLock)
+                React();
+            yield return new WaitForSeconds(ReactionTime);
+        }
+    }
+    #endregion
+
+    #region Private Methods
+    public void SetTarget(Vector2 t)
+    {
+        target = t;
+        if (DebugMode)
+        {
+            var debug = Instantiate(DebugTargetDisplay, new Vector3(t.x, t.y, 0), Quaternion.identity);
+            GameObject.Destroy(debug, ReactionTime);
+        }
+    }
+
+    public void InvokeTargetReached ()
+    {
+        if (ReachedTarget != null)
+            ReachedTarget.Invoke(this, null);
+    }
 
     void Align()
     {
@@ -94,12 +115,12 @@ public class TargetingComponent : MonoBehaviour
         }
         else
         {
-            // React when the target is reached
             if (Vector2.Distance(target, transform.position) < TargetDeadZone)
             {
+                
                 React();
             }
-
+            InvokeTargetReached();
             HorizontalMoveCommand = 0;
         }
     }
@@ -129,10 +150,12 @@ public class TargetingComponent : MonoBehaviour
         }
     }
 
-    private void React()
+    void React()
     {
+
         if (rat.Aggravated)
         {
+            pathfinder.FindPath();
             SetTarget(playerTransform.position);
         }
         else
@@ -146,9 +169,13 @@ public class TargetingComponent : MonoBehaviour
             mode = MoveModes.Jump;
     }
 
-    enum MoveModes
+    #endregion
+
+    #region Enums
+    public enum MoveModes
     {
         Align,
         Jump
     }
+    #endregion
 }

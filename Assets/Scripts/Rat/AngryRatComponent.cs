@@ -32,7 +32,9 @@ public class AngryRatComponent : GroundedCharacter
     {
         newVelocity = Velocity;
         SetHorizontalMovement();
+        FloorCheck();
         AddGravity();
+        AddSlopeCompensation();
         CheckJump();
         LimitVelocity();
         Velocity = newVelocity;
