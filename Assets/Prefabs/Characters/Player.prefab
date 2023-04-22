@@ -68,7 +68,9 @@ MonoBehaviour:
   SlopeUpCompensation: 0.05
   ascendingDrag: 4
   holdingJumpDrag: 5
-  coyoteTime: 0.1
+  coyoteTime: 0.14
+  stunnedGravityScale: 1
+  ragdollPhysics: {fileID: 6200000, guid: f6065a3f1b3a7bf42879b84e68911cfd, type: 2}
   inDeathPit: 0
 --- !u!114 &2873157280233526969
 MonoBehaviour:
@@ -82,7 +84,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98a45e7a45d96814e9415e6c48f12047, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iFramesLength: 1
+  stunnedIFramesTime: 3
+  stunnedTime: 2
+  launchDirection: {x: 2, y: 1}
+  launchSpeed: 7
 --- !u!114 &1706552459537519675
 MonoBehaviour:
   m_ObjectHideFlags: 0

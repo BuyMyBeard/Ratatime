@@ -6,6 +6,7 @@ public class DeathPitComponent : MonoBehaviour
 {
     [SerializeField] float respawnTimer = 2;
     [SerializeField] Transform respawnLocation;
+    [SerializeField] float respawnIFramesTime = 1;
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.layer == 9)
@@ -26,7 +27,7 @@ public class DeathPitComponent : MonoBehaviour
         yield return new WaitForSeconds(respawnTimer);
         playerMove.inDeathPit = false;
         player.transform.position = respawnLocation.position;
-        StartCoroutine(player.GetComponent<PlayerDamageComponent>().BecomeInvincible());
+        player.GetComponent<PlayerDamageComponent>().TriggerInvincibility(respawnIFramesTime);
     }
     IEnumerator DisableCharacter(GameObject character)
     {

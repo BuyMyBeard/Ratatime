@@ -153,12 +153,7 @@ public abstract class GroundedCharacter : MonoBehaviour
         Debug.DrawRay(rayOrigin,Vector2.right * groundCheckDistance, Color.green);
         Debug.DrawRay(rayOrigin, Vector2.left * groundCheckDistance, Color.blue);
     }
-    protected virtual void SetAnimationParameters()
-    {
-        animator.SetBool("IsWalking", IsWalking);
-        animator.SetBool("IsJumping", IsJumping);
-        animator.SetBool("IsFalling", IsFalling);
-    }
+
     IEnumerator CompensateForSlopeUp()
     {
         yield return new WaitForSeconds(SlopeUpCompensation);

@@ -11,10 +11,12 @@ public class PlayerMoveComponent : GroundedCharacter
     [SerializeField] float ascendingDrag = 1;
     [SerializeField] float holdingJumpDrag = 1;
     [SerializeField] float coyoteTime = 0.2f;
+    [SerializeField] float stunnedGravityScale = 1;
+    [SerializeField] PhysicsMaterial2D ragdollPhysics;
 
     PlayerInputsComponent inputs;
     public bool inDeathPit = false;
-    bool isDroppingPlatform = false;
+    bool isDroppingPlatform = false, stunned = false;
 
     float coyoteTimeElapsed = 0;
 
@@ -31,6 +33,9 @@ public class PlayerMoveComponent : GroundedCharacter
 
     new private void FixedUpdate()
     {
+        if (stunned)
+            return;
+        
         newVelocity = Velocity;
         FloorCheck();
         SetHorizontalVelocity();
@@ -107,6 +112,18 @@ public class PlayerMoveComponent : GroundedCharacter
     public void ResetCoyoteTime()
     {
         coyoteTimeElapsed = 0;
+    }
+    public void TakeKnockBack(Vector2 knockback)
+    {
+        RB.velocity = knockback;
+        RB.gravityScale = stunnedGravityScale;
+        stunned = true;
+        RB.sharedMaterial = ragdollPhysics;
+    }
+    public void Recover()
+    {
+        RB.gravityScale = 0;
+        stunned = false;
     }
 }
 
