@@ -170,7 +170,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tradeWindow: {fileID: 5110227766669242720}
-  tradeWindowDisplayDistance: 0.5
+  tradeWindowDisplayDistance: 4
 --- !u!1001 &4552140738633130123
 PrefabInstance:
   m_ObjectHideFlags: 0

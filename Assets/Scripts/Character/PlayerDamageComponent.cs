@@ -18,16 +18,17 @@ public class PlayerDamageComponent : MonoBehaviour
         playerMove = GetComponent<PlayerMoveComponent>();
         sprite = GetComponentInChildren<SpriteRenderer>();
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         if (!isInvulnerable && collision.gameObject.layer == 3)
         {
             StartCoroutine(TakeKnockback(collision));
             StartCoroutine(BecomeInvincible(stunnedIFramesTime));
         }
+        
     }
 
-    IEnumerator TakeKnockback(Collider2D collision)
+    IEnumerator TakeKnockback(Collision2D collision)
     {
         float deltaX = transform.position.x - collision.transform.position.x;
         Vector2 launchVector = launchDirection * launchSpeed;
