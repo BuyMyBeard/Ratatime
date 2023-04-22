@@ -20,6 +20,7 @@ public class DeathPitComponent : MonoBehaviour
 
     IEnumerator RespawnPlayer(GameObject player)
     {
+        player.transform.Translate(0, 0, 0.5f);
         PlayerMoveComponent playerMove = player.GetComponent<PlayerMoveComponent>();
         playerMove.inDeathPit = true;
         yield return new WaitForSeconds(respawnTimer);
