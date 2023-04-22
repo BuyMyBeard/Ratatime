@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Trade Window
   - Cheese
+  - Past
+  - Future
   layers:
   - Default
   - TransparentFX

@@ -21,8 +21,11 @@ public class Game_Manager : MonoBehaviour
 
     private Camera cam;
 
+    TimeShifter timeshifter;
+
     void Start()
     {
+        timeshifter = GetComponent<TimeShifter>();
         // Assuming there is never more then one camera in the scene
         cam = FindObjectOfType<Camera>();
 

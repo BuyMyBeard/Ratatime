@@ -740,6 +740,14 @@ PrefabInstance:
       propertyPath: m_Size.y
       value: 0.6
       objectReference: {fileID: 0}
+    - target: {fileID: 4025188849773400751, guid: ddfb92bf867d0fe4ab2fe736027a2eb4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.52
+      objectReference: {fileID: 0}
+    - target: {fileID: 4025188849773400751, guid: ddfb92bf867d0fe4ab2fe736027a2eb4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.04
+      objectReference: {fileID: 0}
     - target: {fileID: 4191476031661313229, guid: ddfb92bf867d0fe4ab2fe736027a2eb4, type: 3}
       propertyPath: m_Name
       value: Player (2)
@@ -787,6 +795,14 @@ PrefabInstance:
     - target: {fileID: 8058330483743060980, guid: ddfb92bf867d0fe4ab2fe736027a2eb4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8655174529139976309, guid: ddfb92bf867d0fe4ab2fe736027a2eb4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 16.81
+      objectReference: {fileID: 0}
+    - target: {fileID: 8655174529139976309, guid: ddfb92bf867d0fe4ab2fe736027a2eb4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.06
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1253031208, guid: ddfb92bf867d0fe4ab2fe736027a2eb4, type: 3}

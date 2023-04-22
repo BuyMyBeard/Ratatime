@@ -105,3 +105,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   respawnTimer: 2
   respawnLocation: {fileID: 4307193400906523695}
+  respawnIFramesTime: 1
