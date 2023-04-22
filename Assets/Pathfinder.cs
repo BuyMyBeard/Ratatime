@@ -44,9 +44,12 @@ public class Pathfinder : MonoBehaviour
         var platform = FindPlatforms(endpoint);
 
         if (platform == null)
-            return;
+            landPoint = endpoint;
+        else
+        {
+            SetLandPosition(platform);
+        }
 
-        SetLandPosition(platform);
         SetLaunchPosition();
 
         targetingComponent.SetTarget(launchPoint);

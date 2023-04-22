@@ -4,28 +4,20 @@ using UnityEngine;
 using UnityEngine.Windows;
 using static Game_Manager;
 
-[RequireComponent(typeof(TargetingComponent))]
 public class AngryRatComponent : GroundedCharacter
 {
-    public bool Aggravated { get; set; } = false;
-
     public bool AttempingJump { get; set; } = false;
 
-    private TargetingComponent targetingComponent;
+    public float ActualHorizontalSpeed;
+    private AngryRatMovement movementComponent;
 
 
 
     new void Awake()
     {
         base.Awake();
-        targetingComponent = GetComponent<TargetingComponent>();
-        
-    }
-
-    private void Update()
-    {
-        //I don't think we should findGameObject every frame, lets do it once on awake
-        Aggravated = Vector2.Distance(GameObject.FindGameObjectWithTag("Player").transform.position, transform.position) < targetingComponent.MaxTargetDistance;
+        ActualHorizontalSpeed = horizontalSpeed;
+        movementComponent = GetComponent<AngryRatMovement>();
     }
 
     new void FixedUpdate()
@@ -42,7 +34,7 @@ public class AngryRatComponent : GroundedCharacter
 
     void SetHorizontalMovement ()
     {
-        newVelocity.x = targetingComponent.HorizontalMoveCommand * horizontalSpeed;
+        newVelocity.x = movementComponent.HorizontalMoveCommand * ActualHorizontalSpeed;
     }
 
     void CheckJump ()

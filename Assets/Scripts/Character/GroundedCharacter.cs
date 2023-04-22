@@ -14,11 +14,11 @@ public enum Slope { Down, Up, None };
 
 public abstract class GroundedCharacter : MonoBehaviour
 {
-    [SerializeField] protected float terminalVelocity;
-    [SerializeField] protected float gravAcceleration;
-    [SerializeField] protected float horizontalSpeed;
-    [SerializeField] protected float jumpVelocity;
-    [SerializeField] protected float groundCheckDistance;
+    [SerializeField] protected float terminalVelocity = -6;
+    [SerializeField] protected float gravAcceleration = -15;
+    [SerializeField] public float horizontalSpeed = 7;
+    [SerializeField] protected float jumpVelocity = 12;
+    [SerializeField] protected float groundCheckDistance = 0.1f;
     [SerializeField] protected float compensation;
     [SerializeField] protected LayerMask groundLayer;
     [SerializeField] protected LayerMask platformLayer;

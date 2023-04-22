@@ -26,6 +26,8 @@ public class TargetingComponent : MonoBehaviour
     [SerializeField] private float AttemptJumpRadius;
 
     [SerializeField] private float JumpTelegraph;
+
+    [SerializeField] GameObject PatrolPointA, PatrolPointB;
     #endregion
 
     #region Private Fields
@@ -70,6 +72,13 @@ public class TargetingComponent : MonoBehaviour
         }
 
         Debug.Log(mode);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(PatrolPointA.transform.position, 0.5f);
+        Gizmos.DrawWireSphere(PatrolPointB.transform.position, 0.5f);
+        Gizmos.DrawLine(PatrolPointA.transform.position, PatrolPointB.transform.position);
     }
     #endregion
 
@@ -153,20 +162,20 @@ public class TargetingComponent : MonoBehaviour
     void React()
     {
 
-        if (rat.Aggravated)
-        {
-            pathfinder.FindPath();
-            SetTarget(playerTransform.position);
-        }
-        else
-        {
-            // TODO: Implement wandering
-        }
+        //if (rat.Aggravated)
+        //{
+        //    pathfinder.FindPath();
+        //    SetTarget(playerTransform.position);
+        //}
+        //else
+        //{
+        //    // TODO: Implement wandering
+        //}
 
-        if (jumpLock || targetDistance > AttemptJumpRadius)
-            mode = MoveModes.Align;
-        else
-            mode = MoveModes.Jump;
+        //if (jumpLock || targetDistance > AttemptJumpRadius)
+        //    mode = MoveModes.Align;
+        //else
+        //    mode = MoveModes.Jump;
     }
 
     #endregion
