@@ -42,7 +42,6 @@ public class PlayerTradeComponent : MonoBehaviour
         {
             previousTrader.Deselect();
             potentialTrader.Select();
-            audioManager.PlaySFX(1);
         }
         else
         {

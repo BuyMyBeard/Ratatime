@@ -29,7 +29,7 @@ public abstract class GroundedCharacter : MonoBehaviour
 
     protected bool isTouchingGround, isTouchingPlatform;
     protected Animator animator;
-    private Slope slope = Slope.None;
+    public Slope slope = Slope.None;
     protected SpriteRenderer Sprite { get; private set; }
     public Rigidbody2D RB { get; protected set; }
     public CapsuleCollider2D CC { get; protected set; }
@@ -71,8 +71,8 @@ public abstract class GroundedCharacter : MonoBehaviour
     {
         RB = GetComponent<Rigidbody2D>();
         CC = GetComponent<CapsuleCollider2D>();
-        Sprite = GetComponentInChildren<SpriteRenderer>();
-        ColliderSize = CC.size;
+        Sprite = GetComponent<SpriteRenderer>();
+        ColliderSize = CC.size * transform.localScale;
         audioManager = GetComponent<AudioManagerComponent>();
         //animator = GetComponent<Animator>();
     }
@@ -95,10 +95,14 @@ public abstract class GroundedCharacter : MonoBehaviour
     protected virtual void AddGravity()
     {
         if (IsGrounded)
+        {
             newVelocity.y = 0;
+            RB.sharedMaterial = highFriction;
+        }
         else
         {
             newVelocity.y += gravAcceleration * Time.deltaTime;
+            RB.sharedMaterial = noFriction;
         }
     }
 
@@ -112,7 +116,7 @@ public abstract class GroundedCharacter : MonoBehaviour
 
     protected virtual void FloorCheck()
     {
-        Vector2 rayOrigin = transform.position - new Vector3(0, ColliderSize.y / 2);
+        Vector2 rayOrigin = transform.position - new Vector3(0, ColliderSize.y / 2) + (Vector3)(CC.offset * transform.localScale);
         SlopeCheck(rayOrigin);
         GroundCheck(rayOrigin);
     }
@@ -154,6 +158,10 @@ public abstract class GroundedCharacter : MonoBehaviour
 
         if (oldSlope != Slope.None && slope == Slope.None && IsGrounded)
             StartCoroutine(CompensateForSlopeUp());
+        //if (this is AngryRatComponent)
+        //{
+        //    Debug.Log($"({rayOrigin.x}, {rayOrigin.y}), {groundCheckDistance}");
+        //}
         Debug.DrawRay(rayOrigin,Vector2.right * groundCheckDistance, Color.green);
         Debug.DrawRay(rayOrigin, Vector2.left * groundCheckDistance, Color.blue);
     }
