@@ -34,18 +34,18 @@ public class AngryRatComponent : GroundedCharacter
         SetHorizontalMovement();
         FloorCheck();
         AddGravity();
-        AddSlopeCompensation();
         CheckJump();
+        AddSlopeCompensation();
         LimitVelocity();
         Velocity = newVelocity;
     }
 
-    void SetHorizontalMovement ()
+    void SetHorizontalMovement()
     {
         newVelocity.x = targetingComponent.HorizontalMoveCommand * horizontalSpeed;
     }
 
-    void CheckJump ()
+    void CheckJump()
     {
         if (AttempingJump && IsGrounded && !IsJumping)
         {

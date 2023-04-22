@@ -18,17 +18,24 @@ public class PlayerDamageComponent : MonoBehaviour
         playerMove = GetComponent<PlayerMoveComponent>();
         sprite = GetComponentInChildren<SpriteRenderer>();
     }
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!isInvulnerable && collision.gameObject.layer == 3)
+        if (!isInvulnerable && collision.gameObject.layer == 19)
         {
             StartCoroutine(TakeKnockback(collision));
             StartCoroutine(BecomeInvincible(stunnedIFramesTime));
         }
-        
+    }
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (!isInvulnerable && collision.gameObject.layer == 19)
+        {
+            StartCoroutine(TakeKnockback(collision));
+            StartCoroutine(BecomeInvincible(stunnedIFramesTime));
+        }
     }
 
-    IEnumerator TakeKnockback(Collision2D collision)
+    IEnumerator TakeKnockback(Collider2D collision)
     {
         float deltaX = transform.position.x - collision.transform.position.x;
         Vector2 launchVector = launchDirection * launchSpeed;
@@ -41,7 +48,7 @@ public class PlayerDamageComponent : MonoBehaviour
 
     public IEnumerator BecomeInvincible(float time)
     {
-        Physics.IgnoreLayerCollision(9, 3, true);
+        Physics.IgnoreLayerCollision(9, 19, true);
         isInvulnerable = true;
         Color color = sprite.color;
         color.a = 0.5f;
@@ -50,7 +57,7 @@ public class PlayerDamageComponent : MonoBehaviour
         color.a = 1;
         sprite.color = color;
         isInvulnerable = false;
-        Physics.IgnoreLayerCollision(9, 3, false);
+        Physics.IgnoreLayerCollision(9, 19, false);
     }
     public void TriggerInvincibility(float time)
     {
