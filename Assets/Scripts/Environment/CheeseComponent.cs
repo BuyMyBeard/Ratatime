@@ -8,10 +8,12 @@ public class CheeseComponent : MonoBehaviour
     [SerializeField] float frequency;
     float elapsedTime = 0;
     float previousDisplacement = 0;
+    AudioManagerComponent audioManager;
     public bool IsCollected { get; private set; } = false;
 
     private void Awake()
     {
+        audioManager = GetComponent<AudioManagerComponent>();
         StartCoroutine(MoveOverTime());
     }
     private void OnTriggerEnter2D(Collider2D collision)
@@ -21,6 +23,7 @@ public class CheeseComponent : MonoBehaviour
         GetComponent<Collider2D>().enabled = false;
         collision.GetComponent<PlayerTradeComponent>().CollectCheese();
         StopAllCoroutines();
+        audioManager.PlaySFX(0);
     }
     IEnumerator MoveOverTime()
     {

@@ -6,7 +6,9 @@ public class PlayerTradeComponent : MonoBehaviour
 {
     [SerializeField] int cheeseCount = 1;
     [SerializeField] float tradeCooldown = 1;
+    [SerializeField] float tradeRange = 0.5f;
     FriendlyRatComponent potentialTrader = null, previousTrader;
+
     PlayerInputsComponent inputs;
     bool canTrade = true;
     AudioManagerComponent audioManager;
@@ -32,7 +34,7 @@ public class PlayerTradeComponent : MonoBehaviour
             return;
         }
 
-        if (inputs.InteractInput)
+        if (inputs.InteractInput && potentialTrader.SqrDistanceFromPlayer < tradeRange * tradeRange)
         {
             Trade();
         }
@@ -46,7 +48,6 @@ public class PlayerTradeComponent : MonoBehaviour
         {
             potentialTrader.Select();
         }
-
     }
     public void ProposeTrade(FriendlyRatComponent friendlyRat)
     {
