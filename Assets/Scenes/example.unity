@@ -1866,7 +1866,7 @@ MonoBehaviour:
   Time: 100
   IsFuture: 0
   State: 0
-  SwitchInterval: 1
+  SwitchInterval: 3
 --- !u!4 &457661666 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2113083737069108499, guid: ef22412c8080d444985e84b0bc07aaa8, type: 3}
@@ -5506,6 +5506,10 @@ PrefabInstance:
     - target: {fileID: 5236775599910994474, guid: ef22412c8080d444985e84b0bc07aaa8, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 5236775599910994474, guid: ef22412c8080d444985e84b0bc07aaa8, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef22412c8080d444985e84b0bc07aaa8, type: 3}

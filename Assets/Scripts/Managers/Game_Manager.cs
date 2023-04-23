@@ -26,14 +26,13 @@ public class Game_Manager : MonoBehaviour
 
     void Start()
     {
-        timeShifters = FindObjectsOfType<MonoBehaviour>().OfType<ITimeShifter>().ToList<ITimeShifter>();
+        timeShifters = FindObjectsOfType<MonoBehaviour>().OfType<ITimeShifter>().ToList();
         timeShifters.ForEach(t => t.ShiftToPast());
         // Assuming there is never more then one camera in the scene
         cam = FindObjectOfType<Camera>();
 
         timeUntilSwitch = SwitchInterval;
         StartCoroutine(TickDownTime());
-
     }
 
     IEnumerator TickDownTime()
