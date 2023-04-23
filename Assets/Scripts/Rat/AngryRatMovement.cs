@@ -12,14 +12,19 @@ using static UnityEngine.RuleTile.TilingRuleOutput;
 public class AngryRatMovement : MonoBehaviour
 {
     #region Fields
+    [SerializeField]
     bool isPatroling = true;
-    
+
+    [SerializeField]
     bool isJumpLocked, isWaitLocked;
 
+    [SerializeField]
     Movements currentMovement;
 
+    [SerializeField]
     AngryRatComponent angryRatComponent;
 
+    [SerializeField]
     private GameObject objective, Player;
     #endregion
 
@@ -38,12 +43,16 @@ public class AngryRatMovement : MonoBehaviour
         Player = GameObject.FindGameObjectWithTag("Player");
         angryRatComponent.OnLand += EndJump;
         objective = PointA;
+        
+
         StartCoroutine("SearchForObjective");
     }
 
     private void OnEnable()
-    {
+    {        
         StartCoroutine("SearchForObjective");
+        isJumpLocked = false;
+        isWaitLocked = false;
     }
 
     private void OnDrawGizmos()
