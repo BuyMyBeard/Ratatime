@@ -119,9 +119,29 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1288676786689703396}
     m_Modifications:
+    - target: {fileID: 1253031206, guid: ddfb92bf867d0fe4ab2fe736027a2eb4, type: 3}
+      propertyPath: jumpVelocity
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1253031206, guid: ddfb92bf867d0fe4ab2fe736027a2eb4, type: 3}
+      propertyPath: horizontalSpeed
+      value: 1.3
+      objectReference: {fileID: 0}
     - target: {fileID: 4191476031661313229, guid: ddfb92bf867d0fe4ab2fe736027a2eb4, type: 3}
       propertyPath: m_Name
       value: Rat
+      objectReference: {fileID: 0}
+    - target: {fileID: 4539238190019091952, guid: ddfb92bf867d0fe4ab2fe736027a2eb4, type: 3}
+      propertyPath: JumpTelegraph
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4539238190019091952, guid: ddfb92bf867d0fe4ab2fe736027a2eb4, type: 3}
+      propertyPath: IdealJumpDistance
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4539238190019091952, guid: ddfb92bf867d0fe4ab2fe736027a2eb4, type: 3}
+      propertyPath: AgroSpeedMultiplier
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 8058330483743060980, guid: ddfb92bf867d0fe4ab2fe736027a2eb4, type: 3}
       propertyPath: m_RootOrder
@@ -167,7 +187,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1253031205, guid: ddfb92bf867d0fe4ab2fe736027a2eb4, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: ddfb92bf867d0fe4ab2fe736027a2eb4, type: 3}
 --- !u!4 &311534884047086693 stripped
 Transform:
