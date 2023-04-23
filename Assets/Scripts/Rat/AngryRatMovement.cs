@@ -76,7 +76,7 @@ public class AngryRatMovement : MonoBehaviour
     
     private void OnTargetReached(object sender, EventArgs e)
     {
-        Debug.Log("Target Reached");
+        //Debug.Log("Target Reached");
         if (!isAggravated)
         {
             StartCoroutine(PausePatrol());
@@ -245,7 +245,7 @@ public class AngryRatMovement : MonoBehaviour
         if (isAggravated)
         {
             isPatroling = false;
-            Debug.Log("Finding Path");
+            //Debug.Log("Finding Path");
             FindPath();
         }
         else
@@ -255,12 +255,12 @@ public class AngryRatMovement : MonoBehaviour
             var patrolPB = new Vector2(PatrolPointB.transform.position.x, PatrolPointB.transform.position.y);
             if (target == patrolPA)
             {
-                Debug.Log("Patroling to point b");
+                //Debug.Log("Patroling to point b");
                 target = patrolPB;
             }
             else
             {
-                Debug.Log("Patroling to point a");
+                //Debug.Log("Patroling to point a");
                 target = patrolPA;
             }
         }

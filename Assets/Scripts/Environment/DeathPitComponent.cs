@@ -32,7 +32,7 @@ public class DeathPitComponent : MonoBehaviour
     IEnumerator DisableCharacter(GameObject character)
     {
         yield return new WaitForSeconds(respawnTimer);
-        character.SetActive(false);
+        character.transform.parent.gameObject.SetActive(false);
     }
 }
 

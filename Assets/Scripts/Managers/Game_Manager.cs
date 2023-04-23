@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,7 +9,7 @@ public class Game_Manager : MonoBehaviour
 {
     public int Time;
 
-    public bool IsFuture;
+    public bool IsFuture = false;
 
     public GameplayStates State;
 
@@ -21,17 +22,18 @@ public class Game_Manager : MonoBehaviour
 
     private Camera cam;
 
-    TimeShifter timeshifter;
+    List<ITimeShifter> timeShifters = new List<ITimeShifter>();
 
     void Start()
     {
-        timeshifter = GetComponent<TimeShifter>();
+        timeShifters = FindObjectsOfType<MonoBehaviour>().OfType<ITimeShifter>().ToList<ITimeShifter>();
+        timeShifters.ForEach(t => t.ShiftToPast());
         // Assuming there is never more then one camera in the scene
         cam = FindObjectOfType<Camera>();
 
+        timeUntilSwitch = SwitchInterval;
         StartCoroutine(TickDownTime());
 
-        timeUntilSwitch = SwitchInterval;
     }
 
     IEnumerator TickDownTime()
@@ -63,6 +65,10 @@ public class Game_Manager : MonoBehaviour
     void Switch()
     {
         this.IsFuture = !this.IsFuture;
+        if (IsFuture)
+            timeShifters.ForEach(t => t.ShiftToFuture());
+        else 
+            timeShifters.ForEach(t => t.ShiftToPast());
         this.timeUntilSwitch = SwitchInterval;
 
         // TODO: Remove this code

@@ -71,7 +71,7 @@ public class TargetingComponent : MonoBehaviour
             Jump();
         }
 
-        Debug.Log(mode);
+        //Debug.Log(mode);
     }
 
     private void OnDrawGizmos()
