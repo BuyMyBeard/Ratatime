@@ -11,308 +11,230 @@ using static UnityEngine.RuleTile.TilingRuleOutput;
 [RequireComponent(typeof (AngryRatComponent))]
 public class AngryRatMovement : MonoBehaviour
 {
-    public float HorizontalMoveCommand;
-
-    [SerializeField] float PlayerAgroDistance, TargetDeadZone, IdealJumpDistance, PatrolPauseTime, FOV, AgroSpeedMultiplier, JumpTelegraph, Persistance;
-    [SerializeField] GameObject PatrolPointA, PatrolPointB;
+    #region Fields
+    bool isPatroling = true;
     
+    bool isJumpLocked, isWaitLocked;
 
-    event EventHandler TargetReached;
-    AngryRatComponent rat;
-    GameObject player;
+    Movements currentMovement;
 
-    [SerializeField]
-    bool isPatroling;
-    bool isAggravated => Vector2.Distance(player.transform.position, transform.position) < PlayerAgroDistance;
+    AngryRatComponent angryRatComponent;
 
-    
-    Vector2 target, launchPoint, landPoint;
+    private GameObject objective, Player;
+    #endregion
 
-    [SerializeField]
-    MoveModes mode;
-    bool jumpLock;
-
-    private float targetDistance => Vector2.Distance(transform.position, target);
+    #region Engine Methods
+    private void Update()
+    {
+        angryRatComponent.ActualHorizontalSpeed = objective == Player ? angryRatComponent.horizontalSpeed * AgroSpeedMultiplier : angryRatComponent.horizontalSpeed;
+        currentMovement = CheckJump();
+        Align();
+        Jump();
+    }
 
     private void Awake()
     {
-        rat = GetComponent<AngryRatComponent>();
-        var groundCollisionComponent = GetComponent<GroundedCharacter>();
-        player = GameObject.FindGameObjectWithTag("Player");
-
-        transform.position = PatrolPointA.transform.position;
-        target = PatrolPointB.transform.position;
-
-
-        TargetReached += OnTargetReached;
-        groundCollisionComponent.OnLand += EndJump;
-
-        StartCoroutine(GiveUp());
+        angryRatComponent = GetComponent<AngryRatComponent>();
+        Player = GameObject.FindGameObjectWithTag("Player");
+        angryRatComponent.OnLand += EndJump;
+        objective = PointA;
+        StartCoroutine("SearchForObjective");
     }
 
-    private void Update()
+    private void OnEnable()
     {
-        if (mode == MoveModes.Align)
-        {
-            Align();
-        }
-        else if (mode == MoveModes.Jump && !jumpLock)
-        {
-           Jump();
-        }
+        StartCoroutine("SearchForObjective");
     }
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawWireSphere(PatrolPointA.transform.position, TargetDeadZone);
-        Gizmos.DrawWireSphere(PatrolPointB.transform.position, TargetDeadZone);
-        Gizmos.DrawLine(PatrolPointA.transform.position, PatrolPointB.transform.position);
-    }
+        Gizmos.color = Color.white;
+        Gizmos.DrawWireSphere(PointA.transform.position, AlignmentDeadzone);
+        Gizmos.DrawWireSphere(PointB.transform.position, AlignmentDeadzone);
+        Gizmos.DrawLine(PointA.transform.position, PointB.transform.position);
 
-    public void SetTarget(Vector2 newTarget)
-    {
-        target = newTarget;
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(LeftBound.transform.position, AlignmentDeadzone);
+        Gizmos.DrawLine(LeftBound.transform.position + (Vector3.down * 10), LeftBound.transform.position + (Vector3.up * 10));
+        Gizmos.DrawWireSphere(RightBound.transform.position, AlignmentDeadzone);
+        Gizmos.DrawLine(RightBound.transform.position + (Vector3.down * 10), RightBound.transform.position + (Vector3.up * 10));
     }
-    
-    private void OnTargetReached(object sender, EventArgs e)
+    #endregion
+
+    #region Serialized Fields
+    [Tooltip("The rat will patrol to this point")]
+    [SerializeField] GameObject PointA, PointB;
+
+    [Tooltip("The rat will jump if the player is within the horizontal offset, and above the vertical offset.")]
+    [SerializeField] float HorizontalJumpOffset, VerticalJumpOffset;
+
+    [Tooltip("Keep this a small value")]
+    [SerializeField] float AlignmentDeadzone;
+
+    //Outerbounds
+    [Tooltip("If the player goes inside the bounds, the rat will agro")]
+    [SerializeField] GameObject LeftBound, RightBound;
+
+    [Tooltip("How often in seconds the rat checks for the player while patroling")]
+    [SerializeField] float ObjectiveSearchTime;
+
+    [Tooltip("How long in seconds the rat waits at a point while patroling")]
+    [SerializeField] float PointWaitTime;
+
+    [Tooltip("How long in seconds the rat waits before jumping")]
+    [SerializeField] float JumpTelegraph;
+
+    [Tooltip("How much faster the rat runs when attacking")]
+    [SerializeField] float AgroSpeedMultiplier;
+    #endregion
+
+    #region Private Methods
+
+    void Align()
     {
-        if (isPatroling)
+
+        if (objective != null && currentMovement == Movements.Align)
         {
-            Debug.Log("Pausing Patrol");
-            StartCoroutine(PausePatrol());
-        }
-        else
-        {
-            if (target == launchPoint)
+            if (transform.position.x < objective.transform.position.x - AlignmentDeadzone)
             {
-                SetTarget(landPoint);
-                mode = MoveModes.Jump;
+                angryRatComponent.HorizontalMoveCommand = 1;
+            }
+            else if (transform.position.x > objective.transform.position.x + AlignmentDeadzone)
+            {
+                angryRatComponent.HorizontalMoveCommand = -1;
             }
             else
             {
-                React();
+                angryRatComponent.HorizontalMoveCommand = 0;
+                if (isPatroling)
+                {
+                    PatrolPointReached();
+                }
             }
         }
     }
 
-    private void FindPath()
+    void Jump()
     {
-        var endpoint = FindEndpoint();
-
-        var platform = FindPlatforms(endpoint);
-
-        if (platform == null)
-            landPoint = endpoint;
-        else
+        if (currentMovement == Movements.Jump)
         {
-            SetLandPosition(platform);
-        }
-
-        SetLaunchPosition();
-
-        SetTarget(launchPoint);
-    }
-
-    Vector2 FindEndpoint()
-    {
-        return GameObject.FindGameObjectWithTag("Player").transform.position;
-    }
-
-    Collider2D FindPlatforms(Vector2 endpoint)
-    {
-        LayerMask mask = LayerMask.GetMask("Platform");
-
-        //if (IsDebug)
-        //{
-        //    Debug.DrawRay(transform.position, (endpoint - new Vector2(transform.position.x, transform.position.y)), Color.green, 10);
-        //}
-
-        var hit = Physics2D.CircleCast(transform.position, FOV, endpoint - new Vector2(transform.position.x, transform.position.y), Mathf.Infinity, mask);
-        return hit.collider == null ? null : hit.collider;
-    }
-
-    void SetLandPosition(Collider2D platform)
-    {
-        var platformWidth = platform.bounds.size.x;
-        var platformHeight = platform.bounds.size.y;
-        var center = platform.bounds.center;
-
-        var surface = center.y - platformHeight / 2;
-
-        var leftEdge = new Vector2(center.x - platformWidth / 2, surface);
-        var rightEdge = new Vector2(center.x + platformWidth / 2, surface);
-
-        if (Vector2.Distance(transform.position, leftEdge) >= Vector2.Distance(transform.position, rightEdge))
-            landPoint = rightEdge;
-        else
-            landPoint = leftEdge;
-        //if (IsDebug)
-        //{
-        //    var instance = Instantiate(landPointVisualizer, new Vector3(landPoint.x, landPoint.y, 0), Quaternion.identity);
-        //    Destroy(instance, 10);
-        //}
-
-    }
-
-    void SetLaunchPosition()
-    {
-        LayerMask mask = LayerMask.GetMask("Platform");
-        var currentPlatform = Physics2D.CircleCast(transform.position, 1f, Vector2.down, Mathf.Infinity, mask).collider;
-
-        if (currentPlatform == null)
-        {
-            mask = LayerMask.GetMask("Ground");
-            currentPlatform = Physics2D.CircleCast(transform.position, 1f, Vector2.down, Mathf.Infinity, mask).collider;
-        }
-
-        var closestPoint = currentPlatform.bounds.ClosestPoint(landPoint);
-
-        var launchAdjustment = 0f;
-
-        if (closestPoint.x == landPoint.x)
-        {
-            launchAdjustment = transform.position.x <= closestPoint.x ? -IdealJumpDistance : IdealJumpDistance;
-        }
-        else
-        {
-            //TODO: Handle this
-        }
-
-        closestPoint.x += launchAdjustment;
-
-        launchPoint = closestPoint;
-
-        //if (IsDebug)
-        //{
-        //    var instance = Instantiate(launchPointVisualizer, new Vector3(launchPoint.x, launchPoint.y, 0), Quaternion.identity);
-        //    Destroy(instance, 10);
-        //}
-
-    }
-
-    private void Align()
-    {
-        jumpLock = false;
-        if (target.x > transform.position.x + TargetDeadZone)
-            HorizontalMoveCommand = 1;
-        else if (target.x < transform.position.x - TargetDeadZone)
-        {
-            HorizontalMoveCommand = -1;
-        }
-        else
-        {
-            if (HorizontalMoveCommand != 0)
+            if (!isJumpLocked)
             {
-                InvokeTargetReached();
+                isJumpLocked = true;
+
+                // Stop the rat while they wait
+                angryRatComponent.HorizontalMoveCommand = 0;
+
+                StartCoroutine("WaitForJump");                
             }
-
-            HorizontalMoveCommand = 0;
         }
-    }
-
-    async void Jump()
-    {
-        jumpLock = true;
-
-        await Task.Delay((int)(JumpTelegraph * 100));
-
-        if (target.x > transform.position.x)
-            HorizontalMoveCommand = 1;
-        else if (target.x < transform.position.x)
-            HorizontalMoveCommand = -1;
-        else
-            HorizontalMoveCommand = 0;
-
-        rat.AttempingJump = true;
     }
 
     void EndJump(object sender, EventArgs e)
     {
-        if (jumpLock)
+        if (isJumpLocked)
         {
-            rat.AttempingJump = false;
-            React();
+            isJumpLocked = false;
+            angryRatComponent.JumpCommand = false;
         }
     }
 
-    private void InvokeTargetReached()
+    Movements CheckJump()
     {
-        if (TargetReached != null)
+        if (objective.transform.position.y > transform.position.y + VerticalJumpOffset)
         {
-            TargetReached.Invoke(this, null);
+            var jumpBoundLeft = transform.position.x - HorizontalJumpOffset;
+            var jumpBoundRight = transform.position.x + HorizontalJumpOffset;
+            var objectivex = objective.transform.position.x;
+
+            if (objectivex > jumpBoundLeft && objectivex < jumpBoundRight)
+            {
+                return Movements.Jump;
+            }
         }
+
+        if (isJumpLocked)
+        {
+            return Movements.Jump;
+        }
+
+        return Movements.Align;
     }
 
-    void React()
+    void GetObjective()
     {
-        Debug.Log("Reacting");
-
-        rat.ActualHorizontalSpeed = isAggravated ? rat.horizontalSpeed * AgroSpeedMultiplier : rat.horizontalSpeed;
-        if (isAggravated)
+        if (Player.transform.position.x > LeftBound.transform.position.x && Player.transform.position.x < RightBound.transform.position.x)
         {
             isPatroling = false;
-            //Debug.Log("Finding Path");
-            FindPath();
+            objective = Player;
         }
         else
         {
-            isPatroling = true;
-            var patrolPA = new Vector2(PatrolPointA.transform.position.x, PatrolPointA.transform.position.y);
-            var patrolPB = new Vector2(PatrolPointB.transform.position.x, PatrolPointB.transform.position.y);
-            var PADist = Vector2.Distance(transform.position, patrolPA);
-            var PBDist = Vector2.Distance(transform.position, patrolPB);
-            if (target == patrolPA || PADist < TargetDeadZone)
+            if (objective == Player)
             {
-                Debug.Log("Patroling to point b");
-                target = patrolPB;
-            }
-            else if (target == patrolPB || PBDist < TargetDeadZone)
-            {
-                Debug.Log("Patroling to point a");
-                target = patrolPA;
-            }
-            else
-            {
-                
+                isPatroling = true;
+                objective = PointA;
             }
         }
-
-        if (jumpLock || targetDistance > IdealJumpDistance)
-            mode = MoveModes.Align;
-        else if (!isPatroling)
-            mode = MoveModes.Jump;
-
     }
 
-    IEnumerator PausePatrol()
+    void PatrolPointReached()
     {
-        bool waiting = true;
-        while (waiting)
-        { 
-            yield return new WaitForSeconds(PatrolPauseTime);
-            waiting = false;
-            React();
+        if (!isWaitLocked)
+        {
+            isWaitLocked = true;
+            StartCoroutine("WaitAtPoint");
         }
     }
+    #endregion
 
-    IEnumerator GiveUp()
+    #region Coroutines
+    IEnumerator SearchForObjective()
     {
         while (true)
         {
-            if (!jumpLock)
-            {
-                Debug.Log("Gave up");
-                InvokeTargetReached();
-            }
 
-            yield return new WaitForSeconds(Persistance);
+            GetObjective();
+            
+            yield return new WaitForSeconds(ObjectiveSearchTime);
         }
     }
 
-    public enum MoveModes
+    IEnumerator WaitForJump()
+    {
+        yield return new WaitForSeconds(JumpTelegraph);
+
+        angryRatComponent.JumpCommand = true;
+
+        if (objective.transform.position.x > transform.position.x)
+            angryRatComponent.HorizontalMoveCommand = 1;
+        else if (objective.transform.position.x < transform.position.x)
+            angryRatComponent.HorizontalMoveCommand = -1;
+        else
+            angryRatComponent.HorizontalMoveCommand = 0;
+    }
+
+    IEnumerator WaitAtPoint()
+    {
+        yield return new WaitForSeconds(PointWaitTime);
+
+        if (objective == PointA)
+        {
+            objective = PointB;
+        }
+        else if (objective == PointB)
+        {
+            objective = PointA;
+        }
+        isWaitLocked = false;
+    }
+    #endregion
+
+    #region Enums
+    enum Movements
     {
         Align,
-        Jump,
-        Patrol
+        Jump
     }
+    #endregion
 }

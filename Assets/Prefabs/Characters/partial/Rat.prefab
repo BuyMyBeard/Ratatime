@@ -108,6 +108,39 @@ Transform:
   m_Father: {fileID: 5856963388216530803}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5081195455896500662
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6462078893489695867}
+  m_Layer: 3
+  m_Name: Bounds
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6462078893489695867
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5081195455896500662}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5737289550400522731}
+  - {fileID: 5512363180239257773}
+  m_Father: {fileID: 8058330483743060980}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5323731524235390321
 GameObject:
   m_ObjectHideFlags: 0
@@ -188,6 +221,68 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: -0.45}
   m_Size: {x: 2, y: 1}
   m_Direction: 1
+--- !u!1 &6787840187980596402
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5512363180239257773}
+  m_Layer: 3
+  m_Name: RightBound
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5512363180239257773
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6787840187980596402}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6462078893489695867}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7581177144331564475
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5737289550400522731}
+  m_Layer: 3
+  m_Name: LeftBound
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5737289550400522731
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7581177144331564475}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6462078893489695867}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &8252809585901719271
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -452,6 +547,8 @@ MonoBehaviour:
   highFriction: {fileID: 6200000, guid: c8e6fcb367d27ad4f9b644c1cede64cd, type: 2}
   SlopeUpCompensation: 0.05
   slope: 2
+  JumpCommand: 0
+  HorizontalMoveCommand: 0
   ActualHorizontalSpeed: 0
 --- !u!114 &4539238190019091952
 MonoBehaviour:
@@ -465,19 +562,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb8f5ff454dd127459fef1cf46cf66ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HorizontalMoveCommand: 0
-  PlayerAgroDistance: 10
-  TargetDeadZone: 0.5
-  IdealJumpDistance: 6
-  PatrolPauseTime: 1
-  FOV: 0.3
-  AgroSpeedMultiplier: 1.6
-  JumpTelegraph: 0
-  Persistance: 4
-  PatrolPointA: {fileID: 358836477094515085}
-  PatrolPointB: {fileID: 4070886870816555348}
-  isPatroling: 0
-  mode: 0
+  PointA: {fileID: 0}
+  PointB: {fileID: 0}
+  HorizontalJumpOffset: 0
+  VerticalJumpOffset: 0
+  AlignmentDeadzone: 0
+  LeftBound: {fileID: 0}
+  RightBound: {fileID: 0}
+  ObjectiveSearchTime: 0
 --- !u!4 &8058330483743060980 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2113083737069108499, guid: ef22412c8080d444985e84b0bc07aaa8, type: 3}

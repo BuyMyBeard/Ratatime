@@ -6,16 +6,15 @@ using static Game_Manager;
 
 public class AngryRatComponent : GroundedCharacter
 {
-    public bool AttempingJump { get; set; } = false;
+    public bool JumpCommand;
+    public int HorizontalMoveCommand;
 
     public float ActualHorizontalSpeed;
-    private AngryRatMovement movementComponent;
 
     new void Awake()
     {
         base.Awake();
         ActualHorizontalSpeed = horizontalSpeed;
-        movementComponent = GetComponent<AngryRatMovement>();
     }
 
     new void FixedUpdate()
@@ -32,12 +31,12 @@ public class AngryRatComponent : GroundedCharacter
 
     void SetHorizontalMovement()
     {
-        newVelocity.x = movementComponent.HorizontalMoveCommand * ActualHorizontalSpeed;
+        newVelocity.x = HorizontalMoveCommand * ActualHorizontalSpeed;
     }
 
     void CheckJump()
     {
-        if (AttempingJump && IsGrounded && !IsJumping)
+        if (JumpCommand && IsGrounded && !IsJumping)
         {
             newVelocity.y = jumpVelocity;
         }
