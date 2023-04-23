@@ -56,10 +56,17 @@ public class PlayerMoveComponent : GroundedCharacter
         else
         {
             newVelocity.x = inputs.HorizontalInput * horizontalSpeed;
-            if (inputs.HorizontalInput > 0)
+            if (inputs.HorizontalInput == 0)
+            {
+                animator.Play("MCIdle");
+                return;
+            }
+            else if (inputs.HorizontalInput > 0)
                 Sprite.flipX = false;
-            else if (inputs.HorizontalInput < 0)
+            else
                 Sprite.flipX = true;
+            animator.Play("MCRun");
+                
         }
     }
 
