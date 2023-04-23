@@ -74,7 +74,7 @@ public abstract class GroundedCharacter : MonoBehaviour
         Sprite = GetComponent<SpriteRenderer>();
         ColliderSize = CC.size * transform.localScale;
         audioManager = GetComponent<AudioManagerComponent>();
-        //animator = GetComponent<Animator>();
+        animator = GetComponent<Animator>();
     }
 
     protected void FixedUpdate()
