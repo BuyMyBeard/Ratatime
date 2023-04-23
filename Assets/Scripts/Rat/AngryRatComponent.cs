@@ -11,8 +11,6 @@ public class AngryRatComponent : GroundedCharacter
     public float ActualHorizontalSpeed;
     private AngryRatMovement movementComponent;
 
-
-
     new void Awake()
     {
         base.Awake();

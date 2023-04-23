@@ -76,9 +76,9 @@ public class AngryRatMovement : MonoBehaviour
     
     private void OnTargetReached(object sender, EventArgs e)
     {
-        //Debug.Log("Target Reached");
-        if (!isAggravated)
+        if (isPatroling)
         {
+            Debug.Log("Pausing Patrol");
             StartCoroutine(PausePatrol());
         }
         else
@@ -201,8 +201,12 @@ public class AngryRatMovement : MonoBehaviour
         }
         else
         {
+            if (HorizontalMoveCommand != 0)
+            {
+                InvokeTargetReached();
+            }
+
             HorizontalMoveCommand = 0;
-            InvokeTargetReached();
         }
     }
 
@@ -241,6 +245,8 @@ public class AngryRatMovement : MonoBehaviour
 
     void React()
     {
+        Debug.Log("Reacting");
+
         rat.ActualHorizontalSpeed = isAggravated ? rat.horizontalSpeed * AgroSpeedMultiplier : rat.horizontalSpeed;
         if (isAggravated)
         {
@@ -253,24 +259,29 @@ public class AngryRatMovement : MonoBehaviour
             isPatroling = true;
             var patrolPA = new Vector2(PatrolPointA.transform.position.x, PatrolPointA.transform.position.y);
             var patrolPB = new Vector2(PatrolPointB.transform.position.x, PatrolPointB.transform.position.y);
-            if (target == patrolPA)
+            var PADist = Vector2.Distance(transform.position, patrolPA);
+            var PBDist = Vector2.Distance(transform.position, patrolPB);
+            if (target == patrolPA || PADist < TargetDeadZone)
             {
-                //Debug.Log("Patroling to point b");
+                Debug.Log("Patroling to point b");
                 target = patrolPB;
+            }
+            else if (target == patrolPB || PBDist < TargetDeadZone)
+            {
+                Debug.Log("Patroling to point a");
+                target = patrolPA;
             }
             else
             {
-                //Debug.Log("Patroling to point a");
-                target = patrolPA;
+                
             }
         }
 
         if (jumpLock || targetDistance > IdealJumpDistance)
             mode = MoveModes.Align;
-        else
+        else if (!isPatroling)
             mode = MoveModes.Jump;
 
-        
     }
 
     IEnumerator PausePatrol()
@@ -288,9 +299,10 @@ public class AngryRatMovement : MonoBehaviour
     {
         while (true)
         {
-            if (!isPatroling && !jumpLock)
+            if (!jumpLock)
             {
-                React();
+                Debug.Log("Gave up");
+                InvokeTargetReached();
             }
 
             yield return new WaitForSeconds(Persistance);

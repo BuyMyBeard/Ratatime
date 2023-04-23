@@ -424,30 +424,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &1253031205
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4191476031661313229}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7379db4509acb544bb834f280056db13, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MaxTargetDistance: 8
-  HorizontalMoveCommand: 0
-  TargetDeadZone: 0.4
-  DebugTargetDisplay: {fileID: 3202436601103665299, guid: d11b29a8c68e6ff4db73678c263cb0bf, type: 3}
-  ReactionTime: 2
-  DebugMode: 0
-  AttemptJumpRadius: 2
-  JumpTelegraph: 5
-  PatrolPointA: {fileID: 358836477094515085}
-  PatrolPointB: {fileID: 4070886870816555348}
-  target: {x: 0, y: 0}
-  mode: 0
 --- !u!114 &1253031206
 MonoBehaviour:
   m_ObjectHideFlags: 0
