@@ -26,6 +26,8 @@ public class AngryRatMovement : MonoBehaviour
 
     [SerializeField]
     private GameObject objective, Player;
+
+    private Vector2 target;
     #endregion
 
     #region Engine Methods
@@ -104,11 +106,11 @@ public class AngryRatMovement : MonoBehaviour
 
         if (objective != null && currentMovement == Movements.Align)
         {
-            if (transform.position.x < objective.transform.position.x - AlignmentDeadzone)
+            if (transform.position.x < target.x - AlignmentDeadzone)
             {
                 angryRatComponent.HorizontalMoveCommand = 1;
             }
-            else if (transform.position.x > objective.transform.position.x + AlignmentDeadzone)
+            else if (transform.position.x > target.x + AlignmentDeadzone)
             {
                 angryRatComponent.HorizontalMoveCommand = -1;
             }
@@ -118,6 +120,10 @@ public class AngryRatMovement : MonoBehaviour
                 if (isPatroling)
                 {
                     PatrolPointReached();
+                }
+                else
+                {
+                    GetObjective();
                 }
             }
         }
@@ -185,6 +191,8 @@ public class AngryRatMovement : MonoBehaviour
                 objective = PointA;
             }
         }
+
+        target = objective.transform.position;
     }
 
     void PatrolPointReached()
@@ -235,6 +243,8 @@ public class AngryRatMovement : MonoBehaviour
         {
             objective = PointA;
         }
+
+        target = objective.transform.position;
         isWaitLocked = false;
     }
     #endregion
