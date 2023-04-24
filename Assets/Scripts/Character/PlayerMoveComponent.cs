@@ -7,9 +7,9 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-enum Animations { Stunned, Idle, Running, Jumping };
 public class PlayerMoveComponent : GroundedCharacter
 {
+    enum Animations { Stunned, Idle, Running, Jumping, Launch, Raising, Falling, Land };
     [SerializeField] float ascendingDrag = 1;
     [SerializeField] float holdingJumpDrag = 1;
     [SerializeField] float coyoteTime = 0.2f;
@@ -21,7 +21,10 @@ public class PlayerMoveComponent : GroundedCharacter
         { Animations.Stunned, "MCStunned" },
         { Animations.Idle, "MCIdle" },
         { Animations.Running, "MCRun" },
-        { Animations.Jumping, "MCJump" },
+        { Animations.Launch, "MCLaunch" },
+        { Animations.Raising, "MCRaising" },
+        { Animations.Falling, "MCFalling" },
+        { Animations.Land, "MCLand" },
     };
 
     PlayerInputsComponent inputs;
@@ -78,15 +81,34 @@ public class PlayerMoveComponent : GroundedCharacter
             newVelocity.x = inputs.HorizontalInput * horizontalSpeed;
             if (inputs.HorizontalInput == 0)
             {
-                SetAnimation(Animations.Idle);
                 return;
             }
             else if (inputs.HorizontalInput > 0)
                 Sprite.flipX = false;
             else
-                Sprite.flipX = true;
-            SetAnimation(Animations.Running);
-                
+                Sprite.flipX = true;             
+        }
+    }
+
+    private void Update()
+    {
+        if (stunned)
+            return;
+        if (IsGrounded)
+        {
+            if (Velocity.x != 0)
+                SetAnimation(Animations.Running);
+            else 
+                SetAnimation(Animations.Idle);
+        }
+        else
+        {
+            if (currentAnimation == Animations.Launch)
+                return;
+            if (Velocity.y <= 0)
+                SetAnimation(Animations.Falling);
+            else
+                SetAnimation(Animations.Raising);
         }
     }
 
@@ -94,6 +116,7 @@ public class PlayerMoveComponent : GroundedCharacter
     {
         if (inputs.JumpPressInput && (IsGrounded || IsCoyoteTime) && !IsJumping)
             newVelocity.y = jumpVelocity;
+        
     }
 
     protected override void AddGravity()

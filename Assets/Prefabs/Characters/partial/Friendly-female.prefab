@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -4125014324799571868}
   - component: {fileID: 5609114404744438307}
   m_Layer: 16
-  m_Name: Friendly
+  m_Name: Friendly-female
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

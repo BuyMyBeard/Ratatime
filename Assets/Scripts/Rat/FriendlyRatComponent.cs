@@ -5,14 +5,35 @@ using UnityEngine;
 
 public class FriendlyRatComponent : MonoBehaviour
 {
+    enum Animations { Idle, Looking, Blinking, Happy };
+    readonly Dictionary<Animations, string> dictAnimations = new Dictionary<Animations, string>()
+    {
+        { Animations.Idle, "idle" },
+        { Animations.Looking, "looking" },
+        { Animations.Blinking, "blinking" },
+        { Animations.Happy, "happy" },
+    };
+
     GameObject player;
     PlayerTradeComponent trade;
     bool hasTraded = false;
     [SerializeField] GameObject tradeWindow;
     [SerializeField] float tradeWindowDisplayDistance = 10;
+    Animator animator;
+    SpriteRenderer sprite;
+    Animations currentAnimation = Animations.Idle;
     public float SqrDistanceFromPlayer { get; private set; }
+
+    private void OnEnable()
+    {
+        StartCoroutine(Animate());
+        int direction = Random.Range(0, 2);
+        sprite.flipX = direction == 0;
+    }
     private void Awake()
     {
+        sprite = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
         tradeWindow.SetActive(false);
         player = GameObject.FindGameObjectWithTag("Player");
         trade = player.GetComponent<PlayerTradeComponent>();
@@ -38,8 +59,53 @@ public class FriendlyRatComponent : MonoBehaviour
     }
     public void Trade()
     {
-        Debug.Log("Trading");
+        StartCoroutine(TradeAnimation());
         Deselect();
         hasTraded = true;
+    }
+    private void SetAnimation(Animations animation)
+    {
+        if (currentAnimation != animation)
+        {
+            animator.Play(dictAnimations[animation]);
+            currentAnimation = animation;
+        }
+    }
+
+    IEnumerator Animate()
+    {
+        int i = 0;
+        while (true)
+        {
+            yield return new WaitForSeconds(1);
+            if (currentAnimation == Animations.Idle)
+            {
+                int choice = Random.Range(1, 11);
+                if (choice < 2)
+                    StartCoroutine(LookAnimation());
+                else if (i++ % 5 == 3)
+                    StartCoroutine(BlinkAnimation());
+            }
+
+        }
+    }
+
+    IEnumerator TradeAnimation()
+    {
+        SetAnimation(Animations.Happy);
+        yield return new WaitForSeconds(2);
+        SetAnimation(Animations.Idle);
+    }
+    IEnumerator BlinkAnimation()
+    {
+        SetAnimation(Animations.Blinking);
+        yield return new WaitForSeconds(0.2f);
+        SetAnimation(Animations.Idle);
+    }
+    IEnumerator LookAnimation()
+    {
+        SetAnimation(Animations.Looking);
+        yield return new WaitForSeconds(2);
+        SetAnimation(Animations.Idle);
     }
 }
