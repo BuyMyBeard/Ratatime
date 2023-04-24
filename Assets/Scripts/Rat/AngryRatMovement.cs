@@ -123,7 +123,7 @@ public class AngryRatMovement : MonoBehaviour
                 }
                 else
                 {
-                    GetObjective();
+                    //GetObjective();
                 }
             }
         }

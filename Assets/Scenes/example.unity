@@ -23672,7 +23672,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6158855729404545633, guid: 9a4aacada16d6644ab7c00013a45cded, type: 3}
       propertyPath: ObjectiveSearchTime
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6158855729404545633, guid: 9a4aacada16d6644ab7c00013a45cded, type: 3}
       propertyPath: HorizontalJumpOffset
@@ -25112,7 +25112,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6158855729404545633, guid: 9a4aacada16d6644ab7c00013a45cded, type: 3}
       propertyPath: ObjectiveSearchTime
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6158855729404545633, guid: 9a4aacada16d6644ab7c00013a45cded, type: 3}
       propertyPath: HorizontalJumpOffset
@@ -25396,7 +25396,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6158855729404545633, guid: 9a4aacada16d6644ab7c00013a45cded, type: 3}
       propertyPath: ObjectiveSearchTime
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6158855729404545633, guid: 9a4aacada16d6644ab7c00013a45cded, type: 3}
       propertyPath: HorizontalJumpOffset
