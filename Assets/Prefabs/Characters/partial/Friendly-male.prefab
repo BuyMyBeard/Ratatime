@@ -86,6 +86,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72917a12d940ad7419fabf895c92ea33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  femaleAnimator: {fileID: 9100000, guid: 615484dd1c92f7a4bb7d54b9202a40f7, type: 2}
   tradeWindow: {fileID: 5110227766669242720}
   tradeWindowDisplayDistance: 4
 --- !u!212 &5609114404744438307
@@ -174,23 +175,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 334378677886337309, guid: b620585bd233e7d49a7df0dda62d09a9, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.045407
+      value: 0.08353526
       objectReference: {fileID: 0}
     - target: {fileID: 334378677886337309, guid: b620585bd233e7d49a7df0dda62d09a9, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.045407
+      value: 0.08353526
       objectReference: {fileID: 0}
     - target: {fileID: 334378677886337309, guid: b620585bd233e7d49a7df0dda62d09a9, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.045407
+      value: 0.08353526
       objectReference: {fileID: 0}
     - target: {fileID: 334378677886337309, guid: b620585bd233e7d49a7df0dda62d09a9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.701
+      value: 1.43
       objectReference: {fileID: 0}
     - target: {fileID: 334378677886337309, guid: b620585bd233e7d49a7df0dda62d09a9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.394
+      value: 0.72
       objectReference: {fileID: 0}
     - target: {fileID: 334378677886337309, guid: b620585bd233e7d49a7df0dda62d09a9, type: 3}
       propertyPath: m_LocalPosition.z

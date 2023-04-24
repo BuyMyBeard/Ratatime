@@ -5,8 +5,7 @@ using UnityEngine;
 
 public class FriendlyRatComponent : MonoBehaviour
 {
-    [SerializeField] Animator femaleAnimator;
-
+    [SerializeField] RuntimeAnimatorController femaleAnimator;
     enum Animations { Idle, Looking, Blinking, Happy };
     readonly Dictionary<Animations, string> dictAnimations = new Dictionary<Animations, string>()
     {
@@ -36,6 +35,8 @@ public class FriendlyRatComponent : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         int gender = Random.Range(0, 2);
+        if (gender == 0)
+            animator.runtimeAnimatorController = femaleAnimator;
         sprite = GetComponent<SpriteRenderer>();
         tradeWindow.SetActive(false);
         player = GameObject.FindGameObjectWithTag("Player");
