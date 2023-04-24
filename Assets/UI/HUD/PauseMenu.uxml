@@ -1,0 +1,12 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/HUD/HUD%20Stylesheet.uss?fileID=7433441132597879392&amp;guid=3ad1791b79f4d0b4bab196fd3b03818f&amp;type=3#HUD Stylesheet" />
+    <ui:VisualElement name="Container" style="flex-grow: 1; flex-direction: row; background-color: rgba(0, 0, 0, 0.29);">
+        <ui:VisualElement name="Left" style="align-items: flex-start; width: 33%;" />
+        <ui:VisualElement name="Center" style="width: 34%; align-items: stretch;">
+            <ui:Button text="Restart" display-tooltip-when-elided="true" name="RestartButton" />
+        </ui:VisualElement>
+        <ui:VisualElement name="Left" style="align-items: flex-end; width: 33%;">
+            <ui:Button text="Play" display-tooltip-when-elided="true" name="PlayButton" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

@@ -1,5 +1,11 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <ui:VisualElement name="Container" style="flex-grow: 1;">
-        <ui:Label text="Label" display-tooltip-when-elided="true" name="Timer" style="-unity-text-align: upper-center; font-size: 20px; color: rgba(22, 22, 22, 255);" />
+    <ui:VisualElement name="Container" style="flex-grow: 1; flex-direction: row; justify-content: flex-start;">
+        <ui:VisualElement name="Left" style="width: 33%;" />
+        <ui:VisualElement name="Center" style="width: 34%;">
+            <ui:Label text="Label" display-tooltip-when-elided="true" name="Timer" style="-unity-text-align: upper-center; font-size: 20px; color: rgb(22, 22, 22);" />
+        </ui:VisualElement>
+        <ui:VisualElement name="Right" style="align-items: flex-end; width: 33%;">
+            <ui:Button text="Pause" display-tooltip-when-elided="true" name="PauseButton" />
+        </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

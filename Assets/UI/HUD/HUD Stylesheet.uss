@@ -1,1 +1,4 @@
-VisualElement {}
+#Center
+{
+	margin-top: 5%;
+}
