@@ -2,10 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+enum Animations { Stunned, Idle, Running, Jumping };
 public class PlayerMoveComponent : GroundedCharacter
 {
     [SerializeField] float ascendingDrag = 1;
@@ -13,6 +15,14 @@ public class PlayerMoveComponent : GroundedCharacter
     [SerializeField] float coyoteTime = 0.2f;
     [SerializeField] float stunnedGravityScale = 1;
     [SerializeField] PhysicsMaterial2D ragdollPhysics;
+    Animations currentAnimation = Animations.Idle;
+    readonly Dictionary<Animations, string> dictAnimations = new Dictionary<Animations, string>() 
+    {
+        { Animations.Stunned, "MCStunned" },
+        { Animations.Idle, "MCIdle" },
+        { Animations.Running, "MCRun" },
+        { Animations.Jumping, "MCJump" },
+    };
 
     PlayerInputsComponent inputs;
     public bool inDeathPit = false;
@@ -49,6 +59,16 @@ public class PlayerMoveComponent : GroundedCharacter
             ResetCoyoteTime();
     }
 
+    private void SetAnimation(Animations animation)
+    {
+        if (currentAnimation != animation)
+        {
+            animator.Play(dictAnimations[animation]);
+            currentAnimation = animation;
+        }
+    }
+
+
     private void SetHorizontalVelocity()
     {
         if (inDeathPit)
@@ -58,14 +78,14 @@ public class PlayerMoveComponent : GroundedCharacter
             newVelocity.x = inputs.HorizontalInput * horizontalSpeed;
             if (inputs.HorizontalInput == 0)
             {
-                animator.Play("MCIdle");
+                SetAnimation(Animations.Idle);
                 return;
             }
             else if (inputs.HorizontalInput > 0)
                 Sprite.flipX = false;
             else
                 Sprite.flipX = true;
-            animator.Play("MCRun");
+            SetAnimation(Animations.Running);
                 
         }
     }
@@ -122,6 +142,8 @@ public class PlayerMoveComponent : GroundedCharacter
     }
     public void TakeKnockBack(Vector2 knockback)
     {
+        SetAnimation(Animations.Stunned);
+        currentAnimation = Animations.Stunned;
         RB.velocity = knockback;
         RB.gravityScale = stunnedGravityScale;
         stunned = true;
@@ -129,6 +151,8 @@ public class PlayerMoveComponent : GroundedCharacter
     }
     public void Recover()
     {
+        currentAnimation = Animations.Idle;
+        SetAnimation(Animations.Idle);
         RB.gravityScale = 0;
         stunned = false;
     }

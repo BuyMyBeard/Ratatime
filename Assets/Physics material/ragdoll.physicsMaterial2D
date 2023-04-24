@@ -7,5 +7,5 @@ PhysicsMaterial2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: ragdoll
-  friction: 0.05
+  friction: 0.1
   bounciness: 0.3
