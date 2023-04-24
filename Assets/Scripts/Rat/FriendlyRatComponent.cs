@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class FriendlyRatComponent : MonoBehaviour
 {
+    [SerializeField] Animator femaleAnimator;
+
     enum Animations { Idle, Looking, Blinking, Happy };
     readonly Dictionary<Animations, string> dictAnimations = new Dictionary<Animations, string>()
     {
@@ -32,8 +34,9 @@ public class FriendlyRatComponent : MonoBehaviour
     }
     private void Awake()
     {
-        sprite = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
+        int gender = Random.Range(0, 2);
+        sprite = GetComponent<SpriteRenderer>();
         tradeWindow.SetActive(false);
         player = GameObject.FindGameObjectWithTag("Player");
         trade = player.GetComponent<PlayerTradeComponent>();
