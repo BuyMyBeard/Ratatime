@@ -31,6 +31,11 @@ public class Game_Manager : MonoBehaviour
         // Assuming there is never more then one camera in the scene
         cam = FindObjectOfType<Camera>();
 
+        if (IsFuture)
+            timeShifters.ForEach(t => t.ShiftToFuture());
+        else
+            timeShifters.ForEach(t => t.ShiftToPast());
+
         timeUntilSwitch = SwitchInterval;
         StartCoroutine(TickDownTime());
     }

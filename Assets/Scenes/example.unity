@@ -24097,22 +24097,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 457661663, guid: ef22412c8080d444985e84b0bc07aaa8, type: 3}
-      propertyPath: m_Size.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 457661663, guid: ef22412c8080d444985e84b0bc07aaa8, type: 3}
-      propertyPath: m_Size.y
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 457661663, guid: ef22412c8080d444985e84b0bc07aaa8, type: 3}
-      propertyPath: m_Offset.y
-      value: -0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 462326227888883051, guid: ef22412c8080d444985e84b0bc07aaa8, type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: 774650054d61198478a30c22bcbf4fde, type: 2}
     - target: {fileID: 2113083737069108499, guid: ef22412c8080d444985e84b0bc07aaa8, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -24157,33 +24141,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2873157280233526969, guid: ef22412c8080d444985e84b0bc07aaa8, type: 3}
-      propertyPath: launchSpeed
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 3906754084804829530, guid: ef22412c8080d444985e84b0bc07aaa8, type: 3}
-      propertyPath: inDeathPit
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3906754084804829530, guid: ef22412c8080d444985e84b0bc07aaa8, type: 3}
-      propertyPath: jumpVelocity
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 3906754084804829530, guid: ef22412c8080d444985e84b0bc07aaa8, type: 3}
-      propertyPath: gravAcceleration
-      value: -25
-      objectReference: {fileID: 0}
-    - target: {fileID: 3906754084804829530, guid: ef22412c8080d444985e84b0bc07aaa8, type: 3}
-      propertyPath: terminalVelocity
-      value: -7
-      objectReference: {fileID: 0}
     - target: {fileID: 5236775599910994474, guid: ef22412c8080d444985e84b0bc07aaa8, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 5236775599910994474, guid: ef22412c8080d444985e84b0bc07aaa8, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef22412c8080d444985e84b0bc07aaa8, type: 3}
