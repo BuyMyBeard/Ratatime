@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions.Must;
 using UnityEngine.InputSystem;
 
 public class PlayerInputsComponent : MonoBehaviour
@@ -13,8 +14,10 @@ public class PlayerInputsComponent : MonoBehaviour
     public bool JumpHoldInput { get; private set; }
     public bool DropInput { get; private set; }
     public bool InteractInput { get; private set; }
+
     private void Awake()
     {
+
         InputMap inputmap = new InputMap();
         moveAction = inputmap.FindAction("Move");
         jumpAction = inputmap.FindAction("Jump");
@@ -28,7 +31,11 @@ public class PlayerInputsComponent : MonoBehaviour
         moveAction.canceled += _ => HorizontalInput = 0;
 
         jumpAction.Enable();
-        jumpAction.started += _ => StartCoroutine(BufferJump());
+        jumpAction.started += _ => 
+        { 
+            if (this != null)
+            StartCoroutine(BufferJump()); 
+        };
         jumpAction.performed += _ => JumpHoldInput = true;
         jumpAction.canceled += _ => JumpHoldInput = false;
 
@@ -55,6 +62,7 @@ public class PlayerInputsComponent : MonoBehaviour
         interactAction.performed -= _ => InteractInput = true;
         interactAction.canceled -= _ => InteractInput = false;
     }
+
 
     IEnumerator BufferJump()
     {
