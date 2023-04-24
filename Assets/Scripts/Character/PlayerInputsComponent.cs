@@ -34,7 +34,7 @@ public class PlayerInputsComponent : MonoBehaviour
         jumpAction.started += _ => 
         { 
             if (this != null)
-            StartCoroutine(BufferJump()); 
+                StartCoroutine(BufferJump()); 
         };
         jumpAction.performed += _ => JumpHoldInput = true;
         jumpAction.canceled += _ => JumpHoldInput = false;
@@ -52,7 +52,6 @@ public class PlayerInputsComponent : MonoBehaviour
         moveAction.performed -= (InputAction.CallbackContext ctx) => HorizontalInput = ctx.ReadValue<float>();
         moveAction.canceled -= _ => HorizontalInput = 0;
 
-        jumpAction.started -= _ => StartCoroutine(BufferJump());
         jumpAction.performed -= _ => JumpHoldInput = true;
         jumpAction.canceled -= _ => JumpHoldInput = false;
 

@@ -1,14 +1,7 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Unity.VisualScripting;
-using UnityEditor.Tilemaps;
 using UnityEngine;
-using UnityEngine.Android;
-using UnityEngine.Windows;
-using Unity.Mathematics;
-using UnityEditor.Build.Content;
+
 public enum GroundedCharacterAnimations { Idle, Walking, Jumping, Raising, Falling, Landing }
 public enum Slope { Down, Up, None };
 
