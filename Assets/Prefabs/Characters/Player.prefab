@@ -266,9 +266,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sfx:
-  - {fileID: 8300000, guid: 31a9cc79c7edc714c89aedbb4f98b832, type: 3}
-  - {fileID: 8300000, guid: bb3645d4b046b3e4bb506d237411718e, type: 3}
-  - {fileID: 8300000, guid: dbebece1fc1c43b4e9a2aded6adf8113, type: 3}
+  - {fileID: 8300000, guid: 93bee15b84ad6454993c43d965487d9d, type: 3}
+  - {fileID: 8300000, guid: 8012d0617bcdf8744a5c004eeccc5329, type: 3}
+  - {fileID: 8300000, guid: 91d486bca08dace4d8ba363bcb0a9c1b, type: 3}
 --- !u!212 &8612527710729599191
 SpriteRenderer:
   m_ObjectHideFlags: 0

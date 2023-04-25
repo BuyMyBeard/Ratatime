@@ -15,6 +15,7 @@ public class PlayerMoveComponent : GroundedCharacter
     [SerializeField] float coyoteTime = 0.2f;
     [SerializeField] float stunnedGravityScale = 1;
     [SerializeField] PhysicsMaterial2D ragdollPhysics;
+    AudioManagerComponent sfx;
     Animations currentAnimation = Animations.Idle;
     readonly Dictionary<Animations, string> dictAnimations = new Dictionary<Animations, string>() 
     {
@@ -42,6 +43,7 @@ public class PlayerMoveComponent : GroundedCharacter
     {
         base.Awake();
         inputs = GetComponent<PlayerInputsComponent>();
+        sfx = GetComponent<AudioManagerComponent>();
     }
 
     new private void FixedUpdate()
@@ -171,6 +173,7 @@ public class PlayerMoveComponent : GroundedCharacter
         RB.gravityScale = stunnedGravityScale;
         stunned = true;
         RB.sharedMaterial = ragdollPhysics;
+        sfx.PlaySFX(1);
     }
     public void Recover()
     {
