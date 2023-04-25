@@ -23,7 +23,7 @@ public abstract class GroundedCharacter : MonoBehaviour
     protected bool isTouchingGround, isTouchingPlatform;
     protected Animator animator;
     public Slope slope = Slope.None;
-    protected SpriteRenderer Sprite { get; private set; }
+    public SpriteRenderer Sprite { get; set; }
     public Rigidbody2D RB { get; protected set; }
     public CapsuleCollider2D CC { get; protected set; }
     public Vector2 ColliderSize { get; protected set; }

@@ -28,19 +28,24 @@ public class AngryRatMovement : MonoBehaviour
     private GameObject objective, Player;
 
     private Vector2 target;
+
+    Animator animator;
+
+    Animations currentAnimation = Animations.RatWalk;
     #endregion
 
     #region Engine Methods
     private void Update()
     {
-        angryRatComponent.ActualHorizontalSpeed = objective == Player ? angryRatComponent.horizontalSpeed * AgroSpeedMultiplier : angryRatComponent.horizontalSpeed;
+        CheckAgro();
         currentMovement = CheckJump();
         Align();
-        Jump();
+        Jump();        
     }
 
     private void Awake()
     {
+        animator = GetComponent<Animator>();
         angryRatComponent = GetComponent<AngryRatComponent>();
         Player = GameObject.FindGameObjectWithTag("Player");
         angryRatComponent.OnLand += EndJump;
@@ -51,7 +56,7 @@ public class AngryRatMovement : MonoBehaviour
     }
 
     private void OnEnable()
-    {        
+    {                
         StartCoroutine("SearchForObjective");
         isJumpLocked = false;
         isWaitLocked = false;
@@ -108,11 +113,14 @@ public class AngryRatMovement : MonoBehaviour
         {
             if (transform.position.x < target.x - AlignmentDeadzone)
             {
+                angryRatComponent.Sprite.flipX = false;
                 angryRatComponent.HorizontalMoveCommand = 1;
             }
             else if (transform.position.x > target.x + AlignmentDeadzone)
             {
+                angryRatComponent.Sprite.flipX = true;
                 angryRatComponent.HorizontalMoveCommand = -1;
+                
             }
             else
             {
@@ -151,6 +159,20 @@ public class AngryRatMovement : MonoBehaviour
         {
             isJumpLocked = false;
             angryRatComponent.JumpCommand = false;
+        }
+    }
+
+    void CheckAgro()
+    {
+        if (objective == Player)
+        {
+            SetAnimation(Animations.RatRun);
+            angryRatComponent.ActualHorizontalSpeed = angryRatComponent.horizontalSpeed * AgroSpeedMultiplier;
+        }
+        else
+        {
+            SetAnimation(Animations.RatWalk);
+            angryRatComponent.ActualHorizontalSpeed = angryRatComponent.horizontalSpeed;
         }
     }
 
@@ -203,6 +225,15 @@ public class AngryRatMovement : MonoBehaviour
             StartCoroutine("WaitAtPoint");
         }
     }
+
+    private void SetAnimation(Animations animation)
+    {
+        if (currentAnimation != animation)
+        {
+            currentAnimation = animation;
+            animator.Play(animation.ToString());
+        }
+    }
     #endregion
 
     #region Coroutines
@@ -224,9 +255,15 @@ public class AngryRatMovement : MonoBehaviour
         angryRatComponent.JumpCommand = true;
 
         if (objective.transform.position.x > transform.position.x)
+        {
+            angryRatComponent.Sprite.flipX = false;
             angryRatComponent.HorizontalMoveCommand = 1;
+        }
         else if (objective.transform.position.x < transform.position.x)
+        {
+            angryRatComponent.Sprite.flipX = true;
             angryRatComponent.HorizontalMoveCommand = -1;
+        }
         else
             angryRatComponent.HorizontalMoveCommand = 0;
     }
@@ -255,5 +292,11 @@ public class AngryRatMovement : MonoBehaviour
         Align,
         Jump
     }
+
+    enum Animations 
+    { 
+        RatWalk,
+        RatRun
+    };
     #endregion
 }
