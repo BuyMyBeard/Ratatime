@@ -1,11 +1,18 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <ui:VisualElement name="Container" style="flex-grow: 1; flex-direction: row; justify-content: flex-start;">
-        <ui:VisualElement name="Left" style="width: 33%;" />
+    <ui:VisualElement name="Container" style="-unity-font: url(&apos;project://database/Assets/Font/manaspc.ttf?fileID=12800000&amp;guid=1f73c555408e112478acb5009a703cc4&amp;type=3#manaspc&apos;); -unity-font-definition: url(&apos;project://database/Assets/Font/manaspc%20SDF.asset?fileID=11400000&amp;guid=ccaba27a7f2c4d147b710b37be072187&amp;type=2#manaspc SDF&apos;); align-items: stretch; flex-grow: 1; flex-direction: row;">
+        <ui:VisualElement name="Left" style="width: 33%;">
+            <ui:VisualElement style="flex-direction: row; height: 10%; -unity-background-scale-mode: scale-to-fit;">
+                <ui:VisualElement style="background-image: url(&apos;project://database/Assets/PrivateFiles/Art/ExportedArt/Cheese.png?fileID=2800000&amp;guid=be00f4b85047e05448e3d380d5aa8d8f&amp;type=3#Cheese&apos;); width: 25%; height: 100%; -unity-background-scale-mode: scale-to-fit; -unity-slice-top: 0; -unity-background-image-tint-color: rgb(255, 255, 255); padding-bottom: 0;" />
+                <ui:VisualElement style="width: 75%;">
+                    <ui:Label text="5" display-tooltip-when-elided="true" name="CheeseCount" style="font-size: 30px;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
         <ui:VisualElement name="Center" style="width: 34%;">
-            <ui:Label text="Label" display-tooltip-when-elided="true" name="Timer" style="-unity-text-align: upper-center; font-size: 20px; color: rgb(22, 22, 22);" />
+            <ui:Label text="Label" display-tooltip-when-elided="true" name="Timer" style="-unity-text-align: upper-center; font-size: 30px; color: rgb(22, 22, 22);" />
         </ui:VisualElement>
         <ui:VisualElement name="Right" style="align-items: flex-end; width: 33%;">
-            <ui:Button text="Pause" display-tooltip-when-elided="true" name="PauseButton" />
+            <ui:Button text="Pause" display-tooltip-when-elided="true" name="PauseButton" style="width: auto; font-size: 30px; -unity-text-outline-color: rgb(41, 41, 41); -unity-text-outline-width: 0; border-left-color: rgb(43, 43, 43); border-right-color: rgb(43, 43, 43); border-top-color: rgb(43, 43, 43); border-bottom-color: rgb(43, 43, 43); border-left-width: 4px; border-right-width: 4px; border-top-width: 4px; border-bottom-width: 4px; border-top-left-radius: 13px; border-bottom-left-radius: 13px; border-top-right-radius: 13px; border-bottom-right-radius: 13px; background-color: rgba(55, 55, 55, 255);" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
