@@ -142,8 +142,13 @@ public abstract class GroundedCharacter : MonoBehaviour
         Slope oldSlope = slope;
         RaycastHit2D slopeHitRight = Physics2D.Raycast(rayOrigin, Vector2.right, groundCheckDistance, groundLayer);
         RaycastHit2D slopeHitLeft = Physics2D.Raycast(rayOrigin, Vector2.left, groundCheckDistance, groundLayer);
-        if (slopeHitLeft == slopeHitRight) //XNOR
+        if (!slopeHitLeft && !slopeHitRight)
             slope = Slope.None;
+        else if (slopeHitLeft && slopeHitRight)
+        {
+            slope = Slope.None;
+            transform.Translate(0, compensation, 0);
+        }
         else if (slopeHitRight)
             slope = Slope.Up;
         else //slopeHitBack
@@ -162,7 +167,7 @@ public abstract class GroundedCharacter : MonoBehaviour
     IEnumerator CompensateForSlopeUp()
     {
         yield return new WaitForSeconds(SlopeUpCompensation);
-        Vector2 rayOrigin = transform.position - new Vector3(0, ColliderSize.y / 2);
+        Vector2 rayOrigin = transform.position - new Vector3(0, ColliderSize.y / 2) + (Vector3)(CC.offset * transform.localScale);
         RaycastHit2D groundHit = Physics2D.Raycast(rayOrigin, Vector2.down, groundCheckDistance, groundLayer);
         if (groundHit && IsGrounded && slope == Slope.None)
         {

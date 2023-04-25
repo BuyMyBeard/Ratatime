@@ -39,7 +39,7 @@ public class PlayerDamageComponent : MonoBehaviour
     {
         float deltaX = transform.position.x - collision.transform.position.x;
         Vector2 launchVector = launchDirection * launchSpeed;
-        if (deltaX >= 0)
+        if (deltaX <= 0)
             launchVector.x = -launchVector.x;
         playerMove.TakeKnockBack(launchVector);
         yield return new WaitForSeconds(stunnedTime);

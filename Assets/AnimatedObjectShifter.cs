@@ -2,17 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AnimatedObjectShifter : MonoBehaviour
+public class AnimatedObjectShifter : MonoBehaviour, ITimeShifter
 {
-    // Start is called before the first frame update
-    void Start()
+    Animator animator;
+    void Awake()
     {
-        
+        animator = GetComponent<Animator>();
+    }
+    public void ShiftToFuture()
+    {
+        animator.Play("Future");
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ShiftToPast()
     {
-        
+        animator.Play("Past");
     }
+
+
+   
 }
