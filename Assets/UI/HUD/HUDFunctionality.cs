@@ -15,7 +15,6 @@ public class HUDFunctionality : MonoBehaviour
     private Button pauseButton;
     //private Button playButton;
     private Game_Manager manager;
-
     void Start()
     {
         doc = GetComponent<UIDocument>();
