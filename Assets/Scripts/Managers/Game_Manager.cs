@@ -85,5 +85,10 @@ public class Game_Manager : MonoBehaviour
         Lost,
         Won
     }
+
+    public void AddTime(int count)
+    {
+        Time += count;
+    }
 }
 

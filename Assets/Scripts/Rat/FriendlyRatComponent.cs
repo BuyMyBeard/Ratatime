@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class FriendlyRatComponent : MonoBehaviour
 {
     [SerializeField] RuntimeAnimatorController femaleAnimator;
+    [SerializeField] TextMeshProUGUI cheeseCount, timeCount;
+    [SerializeField] int minPrice, maxPrice, minCount, maxCount;
     enum Animations { Idle, Looking, Blinking, Happy };
     readonly Dictionary<Animations, string> dictAnimations = new Dictionary<Animations, string>()
     {
@@ -14,6 +17,9 @@ public class FriendlyRatComponent : MonoBehaviour
         { Animations.Blinking, "blinking" },
         { Animations.Happy, "happy" },
     };
+
+    public int Price { get; private set; }
+    public int SellCount { get; private set; }
 
     GameObject player;
     PlayerTradeComponent trade;
@@ -37,6 +43,10 @@ public class FriendlyRatComponent : MonoBehaviour
         int gender = Random.Range(0, 2);
         if (gender == 0)
             animator.runtimeAnimatorController = femaleAnimator;
+        Price = Random.Range(minPrice, maxPrice + 1);
+        cheeseCount.SetText(Price.ToString());
+        SellCount = Random.Range(minCount, maxCount + 1);
+        timeCount.SetText(SellCount.ToString());
         sprite = GetComponent<SpriteRenderer>();
         tradeWindow.SetActive(false);
         player = GameObject.FindGameObjectWithTag("Player");

@@ -12,10 +12,12 @@ public class PlayerTradeComponent : MonoBehaviour
     PlayerInputsComponent inputs;
     bool canTrade = true;
     AudioManagerComponent audioManager;
+    Game_Manager gameManager;
     private void Awake()
     {
         inputs = GetComponent<PlayerInputsComponent>();
         audioManager = GetComponent<AudioManagerComponent>();
+        gameManager = FindAnyObjectByType<Game_Manager>();
     }
 
     // Called before all FriendlyRatComponent updates
@@ -55,7 +57,7 @@ public class PlayerTradeComponent : MonoBehaviour
     }
     private void Trade()
     {
-        if (cheeseCount <= 0)
+        if (cheeseCount <= potentialTrader.Price)
         {
             audioManager.PlaySFX(2);
             StartCoroutine(TradeCooldown());
@@ -63,9 +65,10 @@ public class PlayerTradeComponent : MonoBehaviour
         }
         audioManager.PlaySFX(0);
         potentialTrader.Trade();
+        cheeseCount -= potentialTrader.Price;
+        gameManager.AddTime(potentialTrader.SellCount);
         potentialTrader = null;
         previousTrader = null;
-        cheeseCount--;
         StartCoroutine(TradeCooldown());
     }
 

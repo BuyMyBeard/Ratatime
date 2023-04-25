@@ -17957,7 +17957,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5967970105910584545, guid: 80f617506e2b3714a8f7f9db58c9219d, type: 3}
       propertyPath: decorationType
+<<<<<<< Updated upstream
       value: 3
+=======
+      value: 1
+>>>>>>> Stashed changes
       objectReference: {fileID: 0}
     - target: {fileID: 6504321184837085484, guid: 80f617506e2b3714a8f7f9db58c9219d, type: 3}
       propertyPath: m_RootOrder
@@ -17965,11 +17969,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6504321184837085484, guid: 80f617506e2b3714a8f7f9db58c9219d, type: 3}
       propertyPath: m_LocalPosition.x
+<<<<<<< Updated upstream
       value: -12.574
       objectReference: {fileID: 0}
     - target: {fileID: 6504321184837085484, guid: 80f617506e2b3714a8f7f9db58c9219d, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0.017
+=======
+      value: -11.721
+      objectReference: {fileID: 0}
+    - target: {fileID: 6504321184837085484, guid: 80f617506e2b3714a8f7f9db58c9219d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.074
+>>>>>>> Stashed changes
       objectReference: {fileID: 0}
     - target: {fileID: 6504321184837085484, guid: 80f617506e2b3714a8f7f9db58c9219d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -25091,6 +25103,10 @@ PrefabInstance:
     - target: {fileID: 4237366739415679202, guid: 9a4aacada16d6644ab7c00013a45cded, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.32
+      objectReference: {fileID: 0}
+    - target: {fileID: 5371552807348511004, guid: 9a4aacada16d6644ab7c00013a45cded, type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 6158855729404545633, guid: 9a4aacada16d6644ab7c00013a45cded, type: 3}
       propertyPath: PointA
