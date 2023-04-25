@@ -53,8 +53,10 @@ public class Parallax : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+
+        float yOffset = cam.transform.position.y * 0.16f;
         Vector2 newPos = startPos + travel * parallaxFactor;
-        transform.position = new Vector3(xAxis ? newPos.x : startPos.x, yAxis ? newPos.y : startPos.y, zPosition);
+        transform.position = new Vector3(xAxis ? newPos.x : startPos.x, (yAxis ? newPos.y : startPos.y) + yOffset, zPosition);
 
         if (infiniteLoop) {
             Vector2 totalTravel = cam.transform.position - transform.position;
