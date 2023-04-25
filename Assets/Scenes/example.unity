@@ -17985,7 +17985,7 @@ MonoBehaviour:
   Time: 100
   IsFuture: 0
   State: 0
-  SwitchInterval: 10
+  SwitchInterval: 5
 --- !u!1001 &355916447
 PrefabInstance:
   m_ObjectHideFlags: 0
