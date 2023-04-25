@@ -116,7 +116,7 @@ public class PlayerMoveComponent : GroundedCharacter
 
     private void CheckInputs()
     {
-        if (inputs.JumpPressInput && (IsGrounded || IsCoyoteTime) && !IsJumping)
+        if (inputs.JumpPressInput && (IsGrounded || IsCoyoteTime) && !IsJumping && !inDeathPit)
             newVelocity.y = jumpVelocity;
         
     }
