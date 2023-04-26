@@ -562,14 +562,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb8f5ff454dd127459fef1cf46cf66ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PointA: {fileID: 0}
-  PointB: {fileID: 0}
-  HorizontalJumpOffset: 0
-  VerticalJumpOffset: 0
-  AlignmentDeadzone: 0
-  LeftBound: {fileID: 0}
-  RightBound: {fileID: 0}
-  ObjectiveSearchTime: 0
+  isPatroling: 1
+  isJumpLocked: 0
+  isWaitLocked: 0
+  currentMovement: 0
+  angryRatComponent: {fileID: 0}
+  objective: {fileID: 0}
+  Player: {fileID: 0}
+  PointA: {fileID: 358836477094515085}
+  PointB: {fileID: 4070886870816555348}
+  HorizontalJumpOffset: 3
+  VerticalJumpOffset: 1
+  AlignmentDeadzone: 0.1
+  LeftBound: {fileID: 7581177144331564475}
+  RightBound: {fileID: 6787840187980596402}
+  ObjectiveSearchTime: 1
+  PointWaitTime: 0.5
+  JumpTelegraph: 0.5
+  AgroSpeedMultiplier: 2
 --- !u!4 &8058330483743060980 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2113083737069108499, guid: ef22412c8080d444985e84b0bc07aaa8, type: 3}
