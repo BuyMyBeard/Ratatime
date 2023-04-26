@@ -12,9 +12,12 @@ public class HUDFunctionality : MonoBehaviour
 
     private UIDocument doc;
     private Label countdownTimer;
+    private Label cheeseCount;
     private Button pauseButton;
     //private Button playButton;
     private Game_Manager manager;
+
+
     void Start()
     {
         doc = GetComponent<UIDocument>();
@@ -52,6 +55,11 @@ public class HUDFunctionality : MonoBehaviour
         restartButton.clicked += Restart;
     }
 
+    void SetCheeseCount(object sender, EventArgs e)
+    {
+        cheeseCount.text = sender.ToString();
+    }
+
     private void Restart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
@@ -60,15 +68,22 @@ public class HUDFunctionality : MonoBehaviour
     void Play()
     {
         Time.timeScale = 1;
-        doc.visualTreeAsset = HUD;
 
+        doc.visualTreeAsset = HUD;
         countdownTimer = doc.rootVisualElement.Q<Label>("Timer");
         pauseButton = doc.rootVisualElement.Q<Button>("PauseButton");
-        manager = FindObjectOfType<Game_Manager>();
+        cheeseCount = doc.rootVisualElement.Q<Label>("CheeseCount");
 
-        SetTimer(null, null);
+        manager = FindObjectOfType<Game_Manager>();
+        var player = GameObject.FindGameObjectWithTag("Player");
+        var tradeComponent = player.GetComponent<PlayerTradeComponent>();
+
+        tradeComponent.CheeseCountChanged += SetCheeseCount;
         manager.TimeChanged += SetTimer;
         pauseButton.clicked += Pause;
+
+        SetTimer(null, null);
+        SetCheeseCount(0, null);
 
         doc.rootVisualElement.RegisterCallback<NavigationSubmitEvent>((evt) =>
         {

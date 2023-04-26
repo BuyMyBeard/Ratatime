@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +14,8 @@ public class PlayerTradeComponent : MonoBehaviour
     bool canTrade = true;
     AudioManagerComponent audioManager;
     Game_Manager gameManager;
+
+    public event EventHandler CheeseCountChanged;
     private void Awake()
     {
         inputs = GetComponent<PlayerInputsComponent>();
@@ -69,7 +72,16 @@ public class PlayerTradeComponent : MonoBehaviour
         gameManager.AddTime(potentialTrader.SellCount);
         potentialTrader = null;
         previousTrader = null;
+        InvokeCheeseCountChanged();
         StartCoroutine(TradeCooldown());
+    }
+
+    void InvokeCheeseCountChanged ()
+    {
+        if (CheeseCountChanged != null)
+        {
+            CheeseCountChanged.Invoke(cheeseCount, null);
+        }
     }
 
     IEnumerator TradeCooldown()
@@ -81,5 +93,6 @@ public class PlayerTradeComponent : MonoBehaviour
     public void CollectCheese()
     {
         cheeseCount++;
+        InvokeCheeseCountChanged();
     }
 }
