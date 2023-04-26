@@ -173,7 +173,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4539238190019091952, guid: ddfb92bf867d0fe4ab2fe736027a2eb4, type: 3}
       propertyPath: VerticalJumpOffset
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4539238190019091952, guid: ddfb92bf867d0fe4ab2fe736027a2eb4, type: 3}
       propertyPath: AgroSpeedMultiplier
