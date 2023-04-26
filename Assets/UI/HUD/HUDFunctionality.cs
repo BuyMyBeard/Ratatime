@@ -56,9 +56,16 @@ public class HUDFunctionality : MonoBehaviour
         Time.timeScale = 0;
         doc.visualTreeAsset = GameOver;
 
-        var restartButton = doc.rootVisualElement.Q<Button>("RestartButton");
+        var restartButton = doc.rootVisualElement.Q<Button>("PlayButton");
+        var quitButton = doc.rootVisualElement.Q<Button>("QuitButton");
         restartButton.clicked += Restart;
+        quitButton.clicked += QuitButton_clicked;
         
+    }
+
+    private void QuitButton_clicked()
+    {
+        SceneManager.LoadScene(0);
     }
 
     void Pause()
