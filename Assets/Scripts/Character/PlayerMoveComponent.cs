@@ -31,7 +31,7 @@ public class PlayerMoveComponent : GroundedCharacter
     PlayerInputsComponent inputs;
     public bool inDeathPit = false;
     bool isDroppingPlatform = false, stunned = false;
-
+    bool ended = false;
     float coyoteTimeElapsed = 0;
 
     public bool IsCoyoteTime
@@ -48,7 +48,7 @@ public class PlayerMoveComponent : GroundedCharacter
 
     new private void FixedUpdate()
     {
-        if (stunned)
+        if (stunned || ended)
             return;
         
         newVelocity = Velocity;
@@ -94,7 +94,7 @@ public class PlayerMoveComponent : GroundedCharacter
 
     private void Update()
     {
-        if (stunned)
+        if (stunned || ended)
             return;
         if (IsGrounded)
         {
@@ -181,6 +181,25 @@ public class PlayerMoveComponent : GroundedCharacter
         SetAnimation(Animations.Idle);
         RB.gravityScale = 0;
         stunned = false;
+    }
+    public void End()
+    {
+        SetAnimation(Animations.Idle);
+        Velocity = Vector2.zero;
+        ended = true;
+        StartCoroutine(Fade());
+    }
+    IEnumerator Fade()
+    {
+        yield return new WaitForSeconds(1);
+        for (float a = 1; a >= 0; a -= 0.1f)
+        {
+            yield return new WaitForSeconds(0.1f);
+            Color color = Sprite.color;
+            color.a = a;
+            Sprite.color = color;
+        }
+        Debug.Log(Sprite.color.a);
     }
 }
 
