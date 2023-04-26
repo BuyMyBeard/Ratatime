@@ -1,4 +1,5 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/HUD/HUD%20Stylesheet.uss?fileID=7433441132597879392&amp;guid=3ad1791b79f4d0b4bab196fd3b03818f&amp;type=3#HUD Stylesheet" />
     <ui:VisualElement name="Container" style="-unity-font: url(&apos;project://database/Assets/Font/manaspc.ttf?fileID=12800000&amp;guid=1f73c555408e112478acb5009a703cc4&amp;type=3#manaspc&apos;); -unity-font-definition: url(&apos;project://database/Assets/Font/manaspc%20SDF.asset?fileID=11400000&amp;guid=ccaba27a7f2c4d147b710b37be072187&amp;type=2#manaspc SDF&apos;); align-items: stretch; flex-grow: 1; flex-direction: row;">
         <ui:VisualElement name="Left" style="width: 33%;">
             <ui:VisualElement style="flex-direction: row; height: 10%; -unity-background-scale-mode: scale-to-fit;">
@@ -12,7 +13,7 @@
             <ui:Label text="Label" display-tooltip-when-elided="true" name="Timer" style="-unity-text-align: upper-center; font-size: 30px; color: rgb(22, 22, 22);" />
         </ui:VisualElement>
         <ui:VisualElement name="Right" style="align-items: flex-end; width: 33%;">
-            <ui:Button text="Pause" display-tooltip-when-elided="true" name="PauseButton" style="width: auto; font-size: 30px; -unity-text-outline-color: rgb(41, 41, 41); -unity-text-outline-width: 0; border-left-color: rgb(43, 43, 43); border-right-color: rgb(43, 43, 43); border-top-color: rgb(43, 43, 43); border-bottom-color: rgb(43, 43, 43); border-left-width: 4px; border-right-width: 4px; border-top-width: 4px; border-bottom-width: 4px; border-top-left-radius: 13px; border-bottom-left-radius: 13px; border-top-right-radius: 13px; border-bottom-right-radius: 13px; background-color: rgba(55, 55, 55, 255);" />
+            <ui:Button display-tooltip-when-elided="true" name="PauseButton" style="width: 25%; font-size: 30px; -unity-text-outline-color: rgb(41, 41, 41); -unity-text-outline-width: 0; border-left-color: rgb(43, 43, 43); border-right-color: rgb(43, 43, 43); border-top-color: rgb(43, 43, 43); border-bottom-color: rgb(43, 43, 43); border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0; border-top-left-radius: 0; border-bottom-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; background-color: rgba(255, 255, 255, 0); background-image: url(&apos;project://database/Assets/UI/Pause.png?fileID=2800000&amp;guid=af430dcacabe242488c39a4deb8d5e0e&amp;type=3#Pause&apos;); -unity-background-scale-mode: scale-to-fit;" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

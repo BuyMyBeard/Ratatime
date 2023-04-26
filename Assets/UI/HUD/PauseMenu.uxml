@@ -6,7 +6,7 @@
             <ui:Button text="Restart" display-tooltip-when-elided="true" name="RestartButton" />
         </ui:VisualElement>
         <ui:VisualElement name="Left" style="align-items: flex-end; width: 33%;">
-            <ui:Button text="Play" display-tooltip-when-elided="true" name="PlayButton" />
+            <ui:Button display-tooltip-when-elided="true" name="PlayButton" style="width: 25%; background-color: rgba(56, 56, 56, 0); background-image: url(&apos;project://database/Assets/UI/Play.png?fileID=2800000&amp;guid=29d922ba168383d49bb79eda75e9de77&amp;type=3#Play&apos;); -unity-background-scale-mode: scale-to-fit; border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0; border-top-left-radius: 0; border-bottom-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; font-size: 30px;" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
