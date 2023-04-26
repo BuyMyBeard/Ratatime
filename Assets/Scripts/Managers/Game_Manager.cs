@@ -10,7 +10,7 @@ using UnityEngine.Video;
 public class Game_Manager : MonoBehaviour
 {
     [SerializeField]
-    VideoClip GlitchClip;
+    string GlitchClip;
 
     public int Time;
 
@@ -83,8 +83,7 @@ public class Game_Manager : MonoBehaviour
    
     void Switch()
     {
-        this.player.clip = GlitchClip;
-        this.player.targetCamera = cam;
+        this.player.targetCamera = cam;        
         this.player.Play();
 
         this.IsFuture = !this.IsFuture;

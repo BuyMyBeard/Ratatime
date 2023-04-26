@@ -166,12 +166,18 @@ public class AngryRatMovement : MonoBehaviour
     {
         if (objective == Player)
         {
-            SetAnimation(Animations.RatRun);
+            if (!isJumpLocked && !isWaitLocked)
+            {
+                SetAnimation(Animations.RatRun);
+            }    
             angryRatComponent.ActualHorizontalSpeed = angryRatComponent.horizontalSpeed * AgroSpeedMultiplier;
         }
         else
         {
-            SetAnimation(Animations.RatWalk);
+            if (!isJumpLocked && !isWaitLocked)
+            {
+                SetAnimation(Animations.RatWalk);
+            }
             angryRatComponent.ActualHorizontalSpeed = angryRatComponent.horizontalSpeed;
         }
     }
@@ -250,8 +256,10 @@ public class AngryRatMovement : MonoBehaviour
 
     IEnumerator WaitForJump()
     {
+        SetAnimation(Animations.RatJumpBuildup);
         yield return new WaitForSeconds(JumpTelegraph);
 
+        SetAnimation(Animations.RatRaising);
         angryRatComponent.JumpCommand = true;
 
         if (objective.transform.position.x > transform.position.x)
@@ -270,6 +278,7 @@ public class AngryRatMovement : MonoBehaviour
 
     IEnumerator WaitAtPoint()
     {
+        SetAnimation(Animations.RatIdle);
         yield return new WaitForSeconds(PointWaitTime);
 
         if (objective == PointA)
@@ -296,7 +305,11 @@ public class AngryRatMovement : MonoBehaviour
     enum Animations 
     { 
         RatWalk,
-        RatRun
+        RatRun,
+        RatJumpBuildup,
+        RatRaising,
+        RatFalling,
+        RatIdle        
     };
     #endregion
 }
