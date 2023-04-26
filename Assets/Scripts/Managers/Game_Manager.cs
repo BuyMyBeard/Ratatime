@@ -113,5 +113,26 @@ public class Game_Manager : MonoBehaviour
     {
         Time += count;
     }
+
+    public void End()
+    {
+        StopAllCoroutines();
+        StartCoroutine(EndGame());
+    }
+
+    IEnumerator EndGame()
+    {
+        yield return new WaitForSeconds(2);
+        timeShifters.ForEach(t => t.ShiftToPast());
+
+        for (int i = 0; i < 5; i++)
+        {
+            yield return new WaitForSeconds(5);
+            timeShifters.ForEach(t => t.ShiftToFuture());
+            yield return new WaitForSeconds(0.5f);
+            timeShifters.ForEach(t => t.ShiftToPast());
+        }
+    }
+    
 }
 
