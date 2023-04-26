@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AnimatedObjectShifter : MonoBehaviour, ITimeShifter
+public class AnimatedFountain : MonoBehaviour, ITimeShifter
 {
+    [SerializeField] bool animatedInFuture = true;
     Animator animator;
     void Awake()
     {
@@ -11,14 +12,14 @@ public class AnimatedObjectShifter : MonoBehaviour, ITimeShifter
     }
     public void ShiftToFuture()
     {
-        animator.Play("Future");
+        if (animatedInFuture)
+            animator.Play("Future1");
+        else
+            animator.Play("Future2");
     }
 
     public void ShiftToPast()
     {
         animator.Play("Past");
     }
-
-
-   
 }
