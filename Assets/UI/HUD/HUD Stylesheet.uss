@@ -1,4 +1,9 @@
-#Center
+#CheeseCount
 {
-	margin-top: 5%;
+	margin-top: 3%;
+}
+
+#Timer
+{
+	margin-top: 3%;
 }
