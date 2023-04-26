@@ -22,6 +22,7 @@ public class HUDFunctionality : MonoBehaviour
     {
         doc = GetComponent<UIDocument>();
         Play();
+        SetCheeseCount(0, null);
     }
 
     string GetDisplayTime(int time)
@@ -82,8 +83,7 @@ public class HUDFunctionality : MonoBehaviour
         manager.TimeChanged += SetTimer;
         pauseButton.clicked += Pause;
 
-        SetTimer(null, null);
-        SetCheeseCount(0, null);
+        SetTimer(null, null);        
 
         doc.rootVisualElement.RegisterCallback<NavigationSubmitEvent>((evt) =>
         {

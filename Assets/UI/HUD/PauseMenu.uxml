@@ -2,11 +2,13 @@
     <Style src="project://database/Assets/UI/HUD/HUD%20Stylesheet.uss?fileID=7433441132597879392&amp;guid=3ad1791b79f4d0b4bab196fd3b03818f&amp;type=3#HUD Stylesheet" />
     <ui:VisualElement name="Container" style="flex-grow: 1; flex-direction: row; background-color: rgba(0, 0, 0, 0.29);">
         <ui:VisualElement name="Left" style="align-items: flex-start; width: 33%;" />
-        <ui:VisualElement name="Center" style="width: 34%; align-items: stretch;">
-            <ui:Button text="Restart" display-tooltip-when-elided="true" name="RestartButton" />
+        <ui:VisualElement name="Center" style="width: 34%; align-items: stretch; padding-top: 10%;">
+            <ui:VisualElement style="height: 20%; -unity-font-definition: url(&apos;project://database/Assets/Font/manaspc%20SDF.asset?fileID=11400000&amp;guid=ccaba27a7f2c4d147b710b37be072187&amp;type=2#manaspc SDF&apos;); -unity-font: url(&apos;project://database/Assets/Font/manaspc.ttf?fileID=12800000&amp;guid=1f73c555408e112478acb5009a703cc4&amp;type=3#manaspc&apos;);">
+                <ui:Button text="Restart" display-tooltip-when-elided="true" name="RestartButton" style="-unity-background-scale-mode: scale-to-fit; background-image: url(&apos;project://database/Assets/UI/Bar.png?fileID=2800000&amp;guid=b3bd18629571f6847b5140a20ec7c8cc&amp;type=3#Bar&apos;); background-color: rgba(88, 88, 88, 0); border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0; border-top-left-radius: 0; border-bottom-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; flex-shrink: 1; flex-grow: 1; padding-top: 10%; padding-bottom: 25%; font-size: 30px; color: rgb(255, 255, 255);" />
+            </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement name="Left" style="align-items: flex-end; width: 33%;">
-            <ui:Button display-tooltip-when-elided="true" name="PlayButton" style="width: 25%; background-color: rgba(56, 56, 56, 0); background-image: url(&apos;project://database/Assets/UI/Play.png?fileID=2800000&amp;guid=29d922ba168383d49bb79eda75e9de77&amp;type=3#Play&apos;); -unity-background-scale-mode: scale-to-fit; border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0; border-top-left-radius: 0; border-bottom-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; font-size: 30px;" />
+            <ui:Button display-tooltip-when-elided="true" name="PlayButton" style="width: 25%; background-color: rgba(56, 56, 56, 0); background-image: url(&apos;project://database/Assets/UI/Play.png?fileID=2800000&amp;guid=29d922ba168383d49bb79eda75e9de77&amp;type=3#Play&apos;); -unity-background-scale-mode: scale-to-fit; border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0; border-top-left-radius: 0; border-bottom-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; font-size: 60px;" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

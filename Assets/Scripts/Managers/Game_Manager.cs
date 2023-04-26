@@ -4,9 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Video;
 
+[RequireComponent(typeof(VideoPlayer))]
 public class Game_Manager : MonoBehaviour
 {
+    [SerializeField]
+    VideoClip GlitchClip;
+
     public int Time;
 
     public bool IsFuture = false;
@@ -25,10 +30,14 @@ public class Game_Manager : MonoBehaviour
 
     private Camera cam;
 
+    private VideoPlayer player;
+
     List<ITimeShifter> timeShifters = new List<ITimeShifter>();
 
     void Start()
     {
+
+        player = GetComponent<VideoPlayer>();
         timeShifters = FindObjectsOfType<MonoBehaviour>().OfType<ITimeShifter>().ToList();
         timeShifters.ForEach(t => t.ShiftToPast());
         // Assuming there is never more then one camera in the scene
@@ -42,6 +51,8 @@ public class Game_Manager : MonoBehaviour
         timeUntilSwitch = SwitchInterval;
         StartCoroutine(TickDownTime());
         cam.backgroundColor = IsFuture ? FutureSkyBox : PastSkyBox;
+
+        this.player.loopPointReached += Player_loopPointReached;
     }
 
     IEnumerator TickDownTime()
@@ -72,6 +83,10 @@ public class Game_Manager : MonoBehaviour
    
     void Switch()
     {
+        this.player.clip = GlitchClip;
+        this.player.targetCamera = cam;
+        this.player.Play();
+
         this.IsFuture = !this.IsFuture;
         if (IsFuture)
             timeShifters.ForEach(t => t.ShiftToFuture());
@@ -80,6 +95,11 @@ public class Game_Manager : MonoBehaviour
         this.timeUntilSwitch = SwitchInterval;
 
         cam.backgroundColor = IsFuture ? FutureSkyBox : PastSkyBox;
+    }
+
+    private void Player_loopPointReached(VideoPlayer source)
+    {
+        source.Stop();
     }
 
     public enum GameplayStates
