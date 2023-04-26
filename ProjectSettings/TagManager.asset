@@ -8,6 +8,7 @@ TagManager:
   - Cheese
   - Past
   - Future
+  - Credits
   layers:
   - Default
   - TransparentFX
