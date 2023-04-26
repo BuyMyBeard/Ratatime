@@ -83,8 +83,8 @@ public class Game_Manager : MonoBehaviour
    
     void Switch()
     {
-        this.player.clip = GlitchClip;
-        this.player.targetCamera = cam;
+        //this.player.clip = GlitchClip;
+        this.player.targetCamera = cam;        
         this.player.Play();
 
         this.IsFuture = !this.IsFuture;
