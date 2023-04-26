@@ -16,6 +16,7 @@ public class PlayerMoveComponent : GroundedCharacter
     [SerializeField] float stunnedGravityScale = 1;
     [SerializeField] PhysicsMaterial2D ragdollPhysics;
     AudioManagerComponent sfx;
+    AudioSource audioSource;
     Animations currentAnimation = Animations.Idle;
     readonly Dictionary<Animations, string> dictAnimations = new Dictionary<Animations, string>() 
     {
@@ -42,6 +43,7 @@ public class PlayerMoveComponent : GroundedCharacter
     new private void Awake()
     {
         base.Awake();
+        audioSource = GetComponent<AudioSource>();
         inputs = GetComponent<PlayerInputsComponent>();
         sfx = GetComponent<AudioManagerComponent>();
     }
@@ -68,6 +70,11 @@ public class PlayerMoveComponent : GroundedCharacter
     {
         if (currentAnimation != animation)
         {
+            if (animation == Animations.Running)
+                audioSource.Play();
+            else
+                audioSource.Stop();
+                
             animator.Play(dictAnimations[animation]);
             currentAnimation = animation;
         }
@@ -173,7 +180,7 @@ public class PlayerMoveComponent : GroundedCharacter
         RB.gravityScale = stunnedGravityScale;
         stunned = true;
         RB.sharedMaterial = ragdollPhysics;
-        sfx.PlaySFX(1);
+        sfx.PlaySFX(0);
     }
     public void Recover()
     {

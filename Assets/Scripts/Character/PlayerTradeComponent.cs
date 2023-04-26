@@ -12,14 +12,12 @@ public class PlayerTradeComponent : MonoBehaviour
 
     PlayerInputsComponent inputs;
     bool canTrade = true;
-    AudioManagerComponent audioManager;
     Game_Manager gameManager;
 
     public event EventHandler CheeseCountChanged;
     private void Awake()
     {
         inputs = GetComponent<PlayerInputsComponent>();
-        audioManager = GetComponent<AudioManagerComponent>();
         gameManager = FindAnyObjectByType<Game_Manager>();
     }
 
@@ -60,13 +58,12 @@ public class PlayerTradeComponent : MonoBehaviour
     }
     private void Trade()
     {
-        if (cheeseCount <= potentialTrader.Price)
+        if (cheeseCount < potentialTrader.Price)
         {
-            audioManager.PlaySFX(2);
+            potentialTrader.RefuseTrade();
             StartCoroutine(TradeCooldown());
             return;
         }
-        audioManager.PlaySFX(0);
         potentialTrader.Trade();
         cheeseCount -= potentialTrader.Price;
         gameManager.AddTime(potentialTrader.SellCount);

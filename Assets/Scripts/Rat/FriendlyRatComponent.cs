@@ -9,6 +9,7 @@ public class FriendlyRatComponent : MonoBehaviour
     [SerializeField] RuntimeAnimatorController femaleAnimator;
     [SerializeField] TextMeshProUGUI cheeseCount, timeCount;
     [SerializeField] int minPrice, maxPrice, minCount, maxCount;
+    AudioManagerComponent sfx;
     enum Animations { Idle, Looking, Blinking, Happy };
     readonly Dictionary<Animations, string> dictAnimations = new Dictionary<Animations, string>()
     {
@@ -28,6 +29,7 @@ public class FriendlyRatComponent : MonoBehaviour
     [SerializeField] float tradeWindowDisplayDistance = 10;
     Animator animator;
     SpriteRenderer sprite;
+    int gender;
     Animations currentAnimation = Animations.Idle;
     public float SqrDistanceFromPlayer { get; private set; }
 
@@ -39,8 +41,9 @@ public class FriendlyRatComponent : MonoBehaviour
     }
     private void Awake()
     {
+        sfx = GetComponent<AudioManagerComponent>();
         animator = GetComponent<Animator>();
-        int gender = Random.Range(0, 2);
+        gender = Random.Range(0, 2);
         if (gender == 0)
             animator.runtimeAnimatorController = femaleAnimator;
         Price = Random.Range(minPrice, maxPrice + 1);
@@ -75,6 +78,7 @@ public class FriendlyRatComponent : MonoBehaviour
     {
         StartCoroutine(TradeAnimation());
         Deselect();
+
         hasTraded = true;
     }
     private void SetAnimation(Animations animation)
@@ -103,9 +107,25 @@ public class FriendlyRatComponent : MonoBehaviour
 
         }
     }
+    public void RefuseTrade()
+    {
+        if (gender == 0)
+            sfx.PlaySFX(3);
+        else
+            sfx.PlaySFX(4);
+    }
 
     IEnumerator TradeAnimation()
     {
+        if (gender == 0)
+        {
+            if (Random.Range(0, 2) == 0)
+                sfx.PlaySFX(0);
+            else
+                sfx.PlaySFX(1);
+        }
+        else
+            sfx.PlaySFX(2);
         SetAnimation(Animations.Happy);
         yield return new WaitForSeconds(2);
         SetAnimation(Animations.Idle);
