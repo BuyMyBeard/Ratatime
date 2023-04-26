@@ -96,7 +96,7 @@ MonoBehaviour:
   minCount: 1
   maxCount: 10
   tradeWindow: {fileID: 2122720479604159485}
-  tradeWindowDisplayDistance: 4
+  tradeWindowDisplayDistance: 6
 --- !u!212 &5609114404744438307
 SpriteRenderer:
   m_ObjectHideFlags: 0
