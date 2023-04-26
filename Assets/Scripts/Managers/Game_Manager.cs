@@ -41,6 +41,7 @@ public class Game_Manager : MonoBehaviour
 
         timeUntilSwitch = SwitchInterval;
         StartCoroutine(TickDownTime());
+        cam.backgroundColor = IsFuture ? FutureSkyBox : PastSkyBox;
     }
 
     IEnumerator TickDownTime()
