@@ -18039,6 +18039,7 @@ GameObject:
   - component: {fileID: 353294517}
   - component: {fileID: 353294516}
   - component: {fileID: 353294515}
+  - component: {fileID: 353294518}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -18085,6 +18086,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca016e5d1d59c4941ad0a5582a24eb9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GlitchClip: {fileID: 0}
   Time: 100
   IsFuture: 1
   State: 0
@@ -18295,6 +18297,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc72bce085545c24595078cb7fecfb4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!328 &353294518
+VideoPlayer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 353294511}
+  m_Enabled: 1
+  m_VideoClip: {fileID: 0}
+  m_TargetCameraAlpha: 1
+  m_TargetCamera3DLayout: 0
+  m_TargetCamera: {fileID: 0}
+  m_TargetTexture: {fileID: 0}
+  m_TimeReference: 0
+  m_TargetMaterialRenderer: {fileID: 0}
+  m_TargetMaterialProperty: <noninit>
+  m_RenderMode: 2
+  m_AspectRatio: 2
+  m_DataSource: 0
+  m_PlaybackSpeed: 1
+  m_AudioOutputMode: 1
+  m_TargetAudioSources:
+  - {fileID: 353294516}
+  m_DirectAudioVolumes:
+  - 1
+  m_Url: 
+  m_EnabledAudioTracks: 01
+  m_DirectAudioMutes: 00
+  m_ControlledAudioTrackCount: 1
+  m_PlayOnAwake: 1
+  m_SkipOnDrop: 1
+  m_Looping: 0
+  m_WaitForFirstFrame: 1
+  m_FrameReadyEventEnabled: 0
+  m_VideoShaders: []
 --- !u!1001 &355916447
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25762,7 +25799,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 719006604277156566, guid: 9dad0409add8fb94197ea18d6f4fdb80, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 9dad0409add8fb94197ea18d6f4fdb80, type: 3}
 --- !u!1001 &1979145318
 PrefabInstance:
@@ -26065,7 +26103,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4846780475230145361, guid: b7a24a550d9bc4e4c964172799d38d17, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 4846780475230145361, guid: b7a24a550d9bc4e4c964172799d38d17, type: 3}
       propertyPath: m_LocalRotation.w
