@@ -1,6 +1,6 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/StartMenu/MenuStylesheet.uss?fileID=7433441132597879392&amp;guid=fa7e67ee1a0f00646ba121ce6e4326dd&amp;type=3#MenuStylesheet" />
-    <ui:VisualElement name="Container" style="flex-grow: 1; -unity-font-definition: url(&apos;project://database/Assets/Font/manaspc%20SDF.asset?fileID=11400000&amp;guid=ccaba27a7f2c4d147b710b37be072187&amp;type=2#manaspc SDF&apos;); -unity-font: url(&apos;project://database/Assets/Font/manaspc.ttf?fileID=12800000&amp;guid=1f73c555408e112478acb5009a703cc4&amp;type=3#manaspc&apos;);">
+    <ui:VisualElement name="Container" style="flex-grow: 1; -unity-font-definition: url(&apos;project://database/Assets/Font/manaspc%20SDF.asset?fileID=11400000&amp;guid=ccaba27a7f2c4d147b710b37be072187&amp;type=2#manaspc SDF&apos;); -unity-font: url(&apos;project://database/Assets/Font/manaspc.ttf?fileID=12800000&amp;guid=1f73c555408e112478acb5009a703cc4&amp;type=3#manaspc&apos;); background-image: none;">
         <ui:VisualElement name="Content" style="flex-grow: 1; margin-left: 25%; margin-right: 25%; flex-direction: column;">
             <ui:Label text="Ratatime" display-tooltip-when-elided="true" name="Header" style="font-size: 40px; -unity-text-align: upper-center; color: rgb(22, 22, 22);" />
             <ui:VisualElement name="Buttons" style="padding-left: 35%; padding-right: 35%;">
@@ -15,7 +15,7 @@
                 </ui:VisualElement>
                 <ui:VisualElement style="height: 100%; width: 100%;">
                     <ui:Label text="Controller" display-tooltip-when-elided="true" />
-                    <ui:VisualElement style="background-image: url(&apos;project://database/Assets/image.png?fileID=2800000&amp;guid=f162290ca75873f489e48346441ef5c1&amp;type=3#image&apos;); width: 100%; height: 100%; -unity-background-scale-mode: scale-to-fit; font-size: 0; flex-grow: 1;" />
+                    <ui:VisualElement style="background-image: url(&apos;project://database/Assets/image.png?fileID=2800000&amp;guid=f162290ca75873f489e48346441ef5c1&amp;type=3#image&apos;); width: 100%; height: 100%;" />
                 </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>

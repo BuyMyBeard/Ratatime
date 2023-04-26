@@ -77,6 +77,8 @@ public class HUDFunctionality : MonoBehaviour
 
         var restartButton = doc.rootVisualElement.Q<Button>("RestartButton");
         restartButton.clicked += Restart;
+        var QuitButton = doc.rootVisualElement.Q<Button>("QuitButton");
+        QuitButton.clicked += QuitButton_clicked;
     }
 
     void SetCheeseCount(object sender, EventArgs e)
