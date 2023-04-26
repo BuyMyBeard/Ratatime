@@ -199,15 +199,14 @@ public class PlayerMoveComponent : GroundedCharacter
     IEnumerator Fade()
     {
         yield return new WaitForSeconds(1);
-        float a = 1;
-        while(true)
+        for (float a = 1; a >= 0; a -= 0.1f)
         {
             yield return new WaitForSeconds(0.1f);
-            a -= 0.10f;
             Color color = Sprite.color;
             color.a = a;
             Sprite.color = color;
         }
+        Debug.Log(Sprite.color.a);
     }
 }
 
