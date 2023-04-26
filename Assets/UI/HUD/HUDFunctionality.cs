@@ -9,6 +9,7 @@ public class HUDFunctionality : MonoBehaviour
 {
     [SerializeField] VisualTreeAsset HUD;
     [SerializeField] VisualTreeAsset PauseMenu;
+    [SerializeField] VisualTreeAsset GameOver;
 
     private UIDocument doc;
     private Label countdownTimer;
@@ -43,6 +44,21 @@ public class HUDFunctionality : MonoBehaviour
     void SetTimer(object sender, EventArgs e)
     {
         countdownTimer.text = GetDisplayTime(manager.Time);
+
+        if (manager.Time <= 0)
+        {
+            EndGame();
+        }
+    }
+
+    void EndGame ()
+    {
+        Time.timeScale = 0;
+        doc.visualTreeAsset = GameOver;
+
+        var restartButton = doc.rootVisualElement.Q<Button>("RestartButton");
+        restartButton.clicked += Restart;
+        
     }
 
     void Pause()
