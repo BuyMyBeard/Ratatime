@@ -140,16 +140,52 @@ PrefabInstance:
       value: Rat
       objectReference: {fileID: 0}
     - target: {fileID: 4539238190019091952, guid: ddfb92bf867d0fe4ab2fe736027a2eb4, type: 3}
+      propertyPath: PointA
+      value: 
+      objectReference: {fileID: 8033555789045810716}
+    - target: {fileID: 4539238190019091952, guid: ddfb92bf867d0fe4ab2fe736027a2eb4, type: 3}
+      propertyPath: PointB
+      value: 
+      objectReference: {fileID: 6050737524939331269}
+    - target: {fileID: 4539238190019091952, guid: ddfb92bf867d0fe4ab2fe736027a2eb4, type: 3}
+      propertyPath: LeftBound
+      value: 
+      objectReference: {fileID: 194776015116001834}
+    - target: {fileID: 4539238190019091952, guid: ddfb92bf867d0fe4ab2fe736027a2eb4, type: 3}
+      propertyPath: RightBound
+      value: 
+      objectReference: {fileID: 3870134819820426019}
+    - target: {fileID: 4539238190019091952, guid: ddfb92bf867d0fe4ab2fe736027a2eb4, type: 3}
       propertyPath: JumpTelegraph
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4539238190019091952, guid: ddfb92bf867d0fe4ab2fe736027a2eb4, type: 3}
+      propertyPath: PointWaitTime
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4539238190019091952, guid: ddfb92bf867d0fe4ab2fe736027a2eb4, type: 3}
+      propertyPath: AlignmentDeadzone
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 4539238190019091952, guid: ddfb92bf867d0fe4ab2fe736027a2eb4, type: 3}
       propertyPath: IdealJumpDistance
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4539238190019091952, guid: ddfb92bf867d0fe4ab2fe736027a2eb4, type: 3}
+      propertyPath: VerticalJumpOffset
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4539238190019091952, guid: ddfb92bf867d0fe4ab2fe736027a2eb4, type: 3}
       propertyPath: AgroSpeedMultiplier
       value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4539238190019091952, guid: ddfb92bf867d0fe4ab2fe736027a2eb4, type: 3}
+      propertyPath: ObjectiveSearchTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4539238190019091952, guid: ddfb92bf867d0fe4ab2fe736027a2eb4, type: 3}
+      propertyPath: HorizontalJumpOffset
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8058330483743060980, guid: ddfb92bf867d0fe4ab2fe736027a2eb4, type: 3}
       propertyPath: m_RootOrder
@@ -198,8 +234,45 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 1253031205, guid: ddfb92bf867d0fe4ab2fe736027a2eb4, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: ddfb92bf867d0fe4ab2fe736027a2eb4, type: 3}
+--- !u!1 &194776015116001834 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7581177144331564475, guid: ddfb92bf867d0fe4ab2fe736027a2eb4, type: 3}
+  m_PrefabInstance: {fileID: 7747945848334456721}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &311534884047086693 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8058330483743060980, guid: ddfb92bf867d0fe4ab2fe736027a2eb4, type: 3}
+  m_PrefabInstance: {fileID: 7747945848334456721}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3243211763318664743 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5081195455896500662, guid: ddfb92bf867d0fe4ab2fe736027a2eb4, type: 3}
+  m_PrefabInstance: {fileID: 7747945848334456721}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &9003764371622753674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3243211763318664743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bed9d6d60241b8a4ba7f8e7492f03d03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &3870134819820426019 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6787840187980596402, guid: ddfb92bf867d0fe4ab2fe736027a2eb4, type: 3}
+  m_PrefabInstance: {fileID: 7747945848334456721}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6050737524939331269 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4070886870816555348, guid: ddfb92bf867d0fe4ab2fe736027a2eb4, type: 3}
+  m_PrefabInstance: {fileID: 7747945848334456721}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8033555789045810716 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 358836477094515085, guid: ddfb92bf867d0fe4ab2fe736027a2eb4, type: 3}
   m_PrefabInstance: {fileID: 7747945848334456721}
   m_PrefabAsset: {fileID: 0}
