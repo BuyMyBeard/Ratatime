@@ -23,7 +23,7 @@ public class CheeseComponent : MonoBehaviour
         GetComponent<Collider2D>().enabled = false;
         collision.GetComponent<PlayerTradeComponent>().CollectCheese();
         StopAllCoroutines();
-        audioManager.PlaySFX(0);
+        audioManager.PlaySFX(Random.Range(0, 3));
     }
     IEnumerator MoveOverTime()
     {
