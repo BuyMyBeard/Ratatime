@@ -18,6 +18,9 @@ public class Game_Manager : MonoBehaviour
     [SerializeField]
     private int SwitchInterval;
 
+    [SerializeField]
+    Color PastSkyBox, FutureSkyBox;
+
     private int timeUntilSwitch;
 
     private Camera cam;
@@ -75,8 +78,7 @@ public class Game_Manager : MonoBehaviour
             timeShifters.ForEach(t => t.ShiftToPast());
         this.timeUntilSwitch = SwitchInterval;
 
-        // TODO: Remove this code
-        cam.backgroundColor = IsFuture ? new Color(0.3f, 0.3f, 0.3f) : new Color(0.4f, 0.4f, 0.4f);
+        cam.backgroundColor = IsFuture ? FutureSkyBox : PastSkyBox;
     }
 
     public enum GameplayStates
