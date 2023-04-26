@@ -37,7 +37,7 @@ public class HUDFunctionality : MonoBehaviour
             seconds -= 60;
         }
 
-        var displayString = $"{minutes} : {seconds}";
+        var displayString = $"0{minutes}:{seconds}";
         return displayString;
     }
 

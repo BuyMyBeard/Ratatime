@@ -4,7 +4,7 @@
         <ui:VisualElement name="Content" style="flex-grow: 1; margin-left: 25%; margin-right: 25%;">
             <ui:Label text="Ratatime" display-tooltip-when-elided="true" name="Header" style="font-size: 40px; -unity-text-align: upper-center; color: rgb(22, 22, 22);" />
             <ui:VisualElement name="Buttons" style="padding-left: 35%; padding-right: 35%;">
-                <ui:Button text="Play&#10;" display-tooltip-when-elided="true" name="Play_Button" style="-unity-background-scale-mode: scale-to-fit; background-image: url(&apos;project://database/Assets/UI/Bar.png?fileID=2800000&amp;guid=b3bd18629571f6847b5140a20ec7c8cc&amp;type=3#Bar&apos;); background-color: rgba(88, 88, 88, 0); border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0; border-top-left-radius: 0; border-bottom-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; flex-shrink: 1; flex-grow: 1; padding-top: 10%; padding-bottom: 12%; font-size: 30px; color: rgb(255, 255, 255);" />
+                <ui:Button text="Play&#10;" display-tooltip-when-elided="true" name="Play_Button" style="-unity-background-scale-mode: scale-to-fit; background-image: url(&apos;project://database/Assets/UI/Bar.png?fileID=2800000&amp;guid=b3bd18629571f6847b5140a20ec7c8cc&amp;type=3#Bar&apos;); background-color: rgba(88, 88, 88, 0); border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0; border-top-left-radius: 0; border-bottom-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; flex-shrink: 1; flex-grow: 1; padding-top: 10%; padding-bottom: 13%; font-size: 30px; color: rgb(255, 255, 255);" />
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
