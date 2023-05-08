@@ -1,6 +1,9 @@
 # Ratatime
 2023 Gamedev.js jam submission
 
+![Thumbnail](https://user-images.githubusercontent.com/95039323/236713469-a8f10a2c-86d4-4a52-8e91-7e74a32df7db.png)
+
+
 This Game jam was my first experience managing a team, since I managed to get 4 other people on board, those being:
 - **Rebecca Harrie**, Artist
 - **Seth Barrere**, Programmer
