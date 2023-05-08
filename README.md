@@ -1,6 +1,8 @@
 # Ratatime
 2023 Gamedev.js jam submission
 
+[Play here!](https://buymybeard.itch.io/ratatime)
+
 ![Thumbnail](https://user-images.githubusercontent.com/95039323/236713469-a8f10a2c-86d4-4a52-8e91-7e74a32df7db.png)
 
 
