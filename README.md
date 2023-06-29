@@ -1,5 +1,5 @@
 # Ratatime
-2023 Gamedev.js jam submission
+2023 Gamedev.js jam submission and 1st place finish for the Open Source category
 
 [Play here!](https://buymybeard.itch.io/ratatime)
 
